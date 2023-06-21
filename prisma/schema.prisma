@@ -1,0 +1,55 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  PLAYER
+  COACH
+}
+
+enum Position {
+  GOLIE
+  DEFENDER
+  CENTER
+  FORWARD
+}
+
+model User {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  name           String
+  username       String?   @unique
+  email          String?   @unique
+  image          String?
+  hashedPassword String
+  role           Role     @default(PLAYER)
+  position       Position?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  matchIds       String[] @db.ObjectId
+  matches        Match[]  @relation(fields: [matchIds], references: [id])
+}
+
+model Match {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  homeTeam  String?
+  awayTeam  String?
+  lineup    Json?
+  score     String?
+  date      DateTime?
+  location  String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userIds   String[] @db.ObjectId
+  users     User[]   @relation(fields: [userIds], references: [id])
+}
