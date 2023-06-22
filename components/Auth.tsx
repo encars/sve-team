@@ -5,24 +5,70 @@ import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { Button } from "./ui/button";
 import { Loader2 } from "lucide-react";
+import { useToast } from "./ui/use-toast";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
-interface AuthProps { }
-
-const Auth: React.FC<AuthProps> = ({ }) => {
+const Auth = () => {
+    const router = useRouter();
     const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [username, setUsername] = useState<string>("");
+    const [password, setPassword] = useState<string>("");
+
+    const { toast } = useToast();
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+
+        if (!username || !password) {
+            toast({
+                title: "Bruh",
+                description: "It's not that hard to enter a username and password.",
+                variant: "default",
+            })
+            return;
+        }
+
         setIsLoading(true);
 
-        setTimeout(() => {
-            setIsLoading(false);
-        }, 3000);
+        signIn("credentials", {
+            username,
+            password,
+            redirect: false,
+        })
+        .then((callback) => {
+            if (callback?.error) {
+                toast({
+                    title: "Error",
+                    description: "Invalid username or password.",
+                    variant: "destructive",
+                })
+            }
+
+            if (callback?.ok && !callback.error) {
+                toast({
+                    title: "Success",
+                    description: "You have successfully logged in.",
+                    variant: "default",
+                });
+                router.push("/dashboard");
+            }
+        })
+        .finally(() => setIsLoading(false));
     }
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="border p-12 border-muted-foreground rounded-md shadow-lg">
             <div className="flex flex-col space-y-2 mb-4">
+                <div className="flex flex-col items-center justify-between mb-8">
+                    <h1 className="text-primary-foreground text-3xl text-center">
+                        Members only
+                    </h1>
+                    <small className="text-muted-foreground">
+                        Please login to continue
+                    </small>
+
+                </div>
                 <Label className="sr-only" htmlFor="username">
                     Username
                 </Label>
@@ -30,8 +76,9 @@ const Auth: React.FC<AuthProps> = ({ }) => {
                     id="username"
                     placeholder="Username"
                     type="text"
-                    required
                     disabled={isLoading}
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
                     className="text-white"
                 />
                 <Label className="sr-only" htmlFor="password">
@@ -41,12 +88,13 @@ const Auth: React.FC<AuthProps> = ({ }) => {
                     id="password"
                     placeholder="Password"
                     type="password"
-                    required
                     disabled={isLoading}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                     className="text-white"
                 />
             </div>
-            <Button variant="secondary" disabled={isLoading}>
+            <Button variant="secondary" disabled={isLoading} className="w-full">
                 {isLoading && (
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                 )}

@@ -6,46 +6,45 @@ const prisma = new PrismaClient();
 async function main() {
     const hashedPassword = await bcrypt.hash("password123", 10);
 
-    const player1 = await prisma.user.create({
+    const user1 = await prisma.user.create({
         data: {
-            name: "Player 1",
-            username: "player1",
+            name: "player1",
+            displayName: "Player One",
             email: "player1@example.com",
+            image: "https://example.com/player1.jpg",
             hashedPassword,
             role: Role.PLAYER,
             position: Position.FORWARD,
         },
     });
 
-    const player2 = await prisma.user.create({
+    const user2 = await prisma.user.create({
         data: {
-            name: "Player 2",
-            username: "player2",
+            name: "player2",
+            displayName: "Player Two",
             email: "player2@example.com",
+            image: "https://example.com/player2.jpg",
             hashedPassword,
             role: Role.PLAYER,
             position: Position.DEFENDER,
         },
     });
 
-    const coach = await prisma.user.create({
-        data: {
-            name: "Coach",
-            username: "coach",
-            email: "coach@example.com",
-            hashedPassword,
-            role: Role.COACH,
-        },
-    });
-
+    // Create matches
     const match1 = await prisma.match.create({
         data: {
             homeTeam: "Home Team 1",
             awayTeam: "Away Team 1",
-            score: "0-0",
+            lineup: { players: ["player1", "player2"] },
+            score: "1-0",
             date: new Date(),
-            location: "Location 1",
-            userIds: [player1.id, player2.id, coach.id],
+            location: "Stadium 1",
+            users: {
+                connect: [
+                    { id: user1.id },
+                    { id: user2.id },
+                ],
+            },
         },
     });
 
@@ -53,27 +52,19 @@ async function main() {
         data: {
             homeTeam: "Home Team 2",
             awayTeam: "Away Team 2",
-            score: "0-0",
+            lineup: { players: ["player1", "player2"] },
+            score: "2-1",
             date: new Date(),
-            location: "Location 2",
-            userIds: [player1.id, coach.id],
+            location: "Stadium 2",
+            users: {
+                connect: [
+                    { id: user1.id },
+                    { id: user2.id },
+                ],
+            },
         },
     });
 
-    await prisma.user.update({
-        where: { id: player1.id },
-        data: { matchIds: [match1.id, match2.id] },
-    });
-
-    await prisma.user.update({
-        where: { id: player2.id },
-        data: { matchIds: [match1.id] },
-    });
-
-    await prisma.user.update({
-        where: { id: coach.id },
-        data: { matchIds: [match1.id, match2.id] },
-    });
 }
 
 main()

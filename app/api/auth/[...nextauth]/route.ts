@@ -1,10 +1,10 @@
 import prisma from "@/lib/prisma";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import { NextAuthOptions } from "next-auth";
+import NextAuth, { AuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcrypt";
 
-export const authOptions: NextAuthOptions = {
+export const authOptions: AuthOptions = {
     adapter: PrismaAdapter(prisma),
     session: {
         strategy: "jwt",
@@ -23,7 +23,7 @@ export const authOptions: NextAuthOptions = {
 
                 const user = await prisma.user.findUnique({
                     where: {
-                        username: credentials.username
+                        name: credentials.username
                     },
                 });
 
@@ -43,5 +43,11 @@ export const authOptions: NextAuthOptions = {
                 return user;
             }
         })
-    ]
+    ],
+    debug: process.env.NODE_ENV === "development",
+    secret: process.env.NEXTAUTH_SECRET,
 }
+
+const handler = NextAuth(authOptions);
+
+export { handler as GET, handler as POST };

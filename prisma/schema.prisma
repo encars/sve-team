@@ -23,33 +23,33 @@ enum Position {
 }
 
 model User {
-  id             String   @id @default(auto()) @map("_id") @db.ObjectId
-  name           String?
-  username       String   @unique
+  id             String    @id @default(auto()) @map("_id") @db.ObjectId
+  name           String    @unique
+  displayName    String    @default("Player")
   email          String?   @unique
   image          String?
   hashedPassword String
-  role           Role     @default(PLAYER)
+  role           Role      @default(PLAYER)
   position       Position?
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
 
-  matchIds       String[] @db.ObjectId
-  matches        Match[]  @relation(fields: [matchIds], references: [id])
+  matchIds String[] @db.ObjectId
+  matches  Match[]  @relation(fields: [matchIds], references: [id])
 }
 
 model Match {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  homeTeam  String?
-  awayTeam  String?
-  lineup    Json?
-  score     String?
-  date      DateTime?
-  location  String?
+  id       String    @id @default(auto()) @map("_id") @db.ObjectId
+  homeTeam String?
+  awayTeam String?
+  lineup   Json?
+  score    String?
+  date     DateTime?
+  location String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  userIds   String[] @db.ObjectId
-  users     User[]   @relation(fields: [userIds], references: [id])
+  userIds String[] @db.ObjectId
+  users   User[]   @relation(fields: [userIds], references: [id])
 }
