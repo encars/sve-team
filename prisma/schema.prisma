@@ -39,13 +39,13 @@ model User {
 }
 
 model Match {
-  id       String    @id @default(auto()) @map("_id") @db.ObjectId
-  homeTeam String?
-  awayTeam String?
+  id       String   @id @default(auto()) @map("_id") @db.ObjectId
+  homeTeam String
+  awayTeam String
   lineup   Json?
   score    String?
-  date     DateTime?
-  location String?
+  date     DateTime
+  location String
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

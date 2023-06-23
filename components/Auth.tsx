@@ -52,15 +52,16 @@ const Auth = () => {
                     variant: "default",
                 });
                 router.push("/dashboard");
+                router.refresh();
             }
         })
         .finally(() => setIsLoading(false));
     }
 
     return (
-        <form onSubmit={handleSubmit} className="border p-12 border-muted-foreground rounded-md shadow-lg">
+        <form onSubmit={handleSubmit} className="border p-12 border-muted-foreground rounded-md shadow-md shadow-blue-500 focus:shadow-lg hover:shadow-lg hover:shadow-blue-600 transition duration-300">
             <div className="flex flex-col space-y-2 mb-4">
-                <div className="flex flex-col items-center justify-between mb-8">
+                <div className="flex flex-col items-center justify-between mb-6">
                     <h1 className="text-primary-foreground text-3xl text-center">
                         Members only
                     </h1>
