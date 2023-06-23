@@ -3,6 +3,9 @@
 import { Match } from "@prisma/client";
 import { format } from "date-fns";
 import { CalendarDays, ExternalLink, MapPin, Minus, Timer } from "lucide-react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { GiWhistle } from "react-icons/gi";
 
 interface MatchProps {
     match: Match;
@@ -11,8 +14,19 @@ interface MatchProps {
 const Match: React.FC<MatchProps> = ({
     match
 }) => {
+    const router = useRouter();
+
+    const showMatch = (matchId: string) => {
+        router.push(`/matches/${matchId}`);
+    }
+
     return (
-        <div className="flex flex-col py-2 text-primary-foreground bg-blue-950 rounded-md">
+        <div onClick={() => showMatch(match.id)} className="relative flex flex-col py-2 text-primary-foreground bg-blue-950 rounded-md cursor-pointer">
+            <div className="absolute top-2 left-3">
+                {match.needRef && (
+                    <GiWhistle size={24} />
+                )}
+            </div>
             <div className="flex justify-between items-center mx-4 mb-1">
                 <h1 className="font-mono text-lg flex-grow text-right pr-2">
                     {match.homeTeam}
