@@ -31,11 +31,17 @@ model User {
   hashedPassword String
   role           Role      @default(PLAYER)
   position       Position?
-  createdAt      DateTime  @default(now())
-  updatedAt      DateTime  @updatedAt
+  isReferee      Boolean   @default(false)
+  license        String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   matchIds String[] @db.ObjectId
   matches  Match[]  @relation(fields: [matchIds], references: [id])
+
+  refMatchIds String[] @db.ObjectId
+  refMatches  Match[]  @relation("refMatches", fields: [refMatchIds], references: [id])
 }
 
 model Match {
@@ -46,10 +52,14 @@ model Match {
   score    String?
   date     DateTime
   location String
+  needRef  Boolean  @default(false)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   userIds String[] @db.ObjectId
   users   User[]   @relation(fields: [userIds], references: [id])
+
+  refIds String[] @db.ObjectId
+  refs   User[]   @relation("refMatches", fields: [refIds], references: [id])
 }

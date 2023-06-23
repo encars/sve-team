@@ -1,6 +1,6 @@
 import prisma from "@/lib/prisma";
 
-const getMatches = async () => {
+const getMatches = async (numMatches?: number) => {
     try {
         const currentDate = new Date();
         const matches = await prisma.match.findMany({
@@ -12,6 +12,7 @@ const getMatches = async () => {
             orderBy: {
                 date: "asc",
             },
+            take: numMatches,
         });
 
         return matches;

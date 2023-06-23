@@ -1,10 +1,15 @@
 "use client";
 
+import { User } from "@prisma/client";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 
-interface UserAvatarProps {}
+interface UserAvatarProps {
+    user: User
+}
 
-const UserAvatar: React.FC<UserAvatarProps> = ({}) => {
+const UserAvatar: React.FC<UserAvatarProps> = ({
+    user
+}) => {
     return (
         <Avatar>
             <AvatarImage src="/floorball.svg" alt="Avatar" />

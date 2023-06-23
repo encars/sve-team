@@ -16,13 +16,13 @@ const Navbar: React.FC<NavbarProps> = ({
     currentUser,
 }) => {
     return (
-        <nav className="w-full bg-primary text-primary-foreground flex items-center justify-between p-2 border-b border-muted-foreground">
-            <div className="flex items-center justify-start space-x-2">
+        <nav className="fixed top-0 right-0 z-10 w-full bg-primary text-primary-foreground flex items-center justify-between p-2 border-b border-muted-foreground">
+            <Link href={currentUser ? "/dashboard" : "/"} className="flex items-center justify-start space-x-2 ml-2">
                 <Image src="/floorball.svg" alt="Logo" height={32} width={32} />
                 <p>
                     SVE Floorball
                 </p>
-            </div>
+            </Link>
 
             {currentUser && (
                 <Menubar className="bg-primary border-none">
@@ -31,6 +31,17 @@ const Navbar: React.FC<NavbarProps> = ({
                             <AlignJustify className="w-6 h-6" />
                         </MenubarTrigger>
                         <MenubarContent>
+                            <MenubarItem>
+                                <Link href="/dashboard">
+                                    Dashboard
+                                </Link>
+                            </MenubarItem>
+                            <MenubarItem>
+                                <Link href="/matches">
+                                    Matches
+                                </Link>
+                            </MenubarItem>
+                            <MenubarSeparator />
                             <MenubarItem>
                                 <Link href="/profile">
                                     Profile

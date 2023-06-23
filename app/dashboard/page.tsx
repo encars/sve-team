@@ -1,15 +1,13 @@
 import getMatches from "@/actions/getMatches";
-import UpcomingEvents from "@/components/UpcomingEvents";
+import UpcomingMatches from "@/components/UpcomingMatches";
 import { Match } from "@prisma/client";
 
 export default async function Dashboard() {
-    const matches: Match[] = await getMatches();
-
-    console.log(matches)
+    const matches: Match[] = await getMatches(3);
 
     return (
-        <main className="h-screen bg-primary p-2">
-            <UpcomingEvents matches={matches} />
+        <main className="pt-16 h-screen bg-primary p-2">
+            <UpcomingMatches matches={matches} />
         </main>
     )
 }
