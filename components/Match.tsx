@@ -2,10 +2,10 @@
 
 import { Match } from "@prisma/client";
 import { format } from "date-fns";
-import { CalendarDays, ExternalLink, MapPin, Minus, Timer } from "lucide-react";
-import Link from "next/link";
+import { CalendarDays, MapPin, Minus, Timer } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { GiWhistle } from "react-icons/gi";
+import { IoIosPeople } from "react-icons/io";
 
 interface MatchProps {
     match: Match;
@@ -53,17 +53,11 @@ const Match: React.FC<MatchProps> = ({
                     <MapPin size={18} />
                     {match.location}
                 </small>
-                <a
-                    href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(match.location)}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2"
-                >
-                    <small className="flex items-center gap-2 text-primary-foreground font-mono">
-                        <ExternalLink size={18} />
-                        View on Maps
-                    </small>
-                </a>
+
+                <small className="flex items-center gap-2 text-primary-foreground font-mono">
+                    {match.userIds.length}
+                    <IoIosPeople size={18} />
+                </small>
             </div>
         </div>
     );

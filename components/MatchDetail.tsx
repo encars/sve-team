@@ -7,6 +7,9 @@ import { notFound, useRouter } from "next/navigation";
 import { GiWhistle } from "react-icons/gi";
 import { Button } from "./ui/button";
 import PlayerList from "./PlayerList";
+import { useState } from "react";
+import axios, { AxiosError } from "axios";
+import { toast } from "./ui/use-toast";
 
 interface MatchDetailProps {
     match: Match | null;
@@ -16,9 +19,60 @@ const MatchDetail: React.FC<MatchDetailProps> = ({
     match
 }) => {
     const router = useRouter();
+    const [isLoading, setIsLoading] = useState<boolean>(false);
 
     if (!match) {
         return notFound();
+    }
+
+    const handleAccept = async () => {
+        setIsLoading(true);
+
+        axios.post("/api/matches/accept", {
+            matchId: match.id
+        })
+        .then(() => {
+            toast({
+                title: "Match accepted",
+                description: "You have accepted the match",
+                variant: "default"
+            });
+        })
+        .catch(() => {
+            toast({
+                title: "Something went wrong",
+                description: "We could not accept the match",
+                variant: "destructive"
+            });
+        })
+        .finally(() => {
+            setIsLoading(false);
+        });
+    }
+
+    const handleDecline = () => {
+        setIsLoading(true);
+
+        axios.post("/api/matches/decline", {
+            matchId: match.id
+        })
+        .then(() => {
+            toast({
+                title: "Match declined",
+                description: "You have declined the match",
+                variant: "default"
+            });
+        })
+        .catch(() => {
+            toast({
+                title: "Something went wrong",
+                description: "We could not decline the match",
+                variant: "destructive"
+            });
+        })
+        .finally(() => {
+            setIsLoading(false);
+        });
     }
 
     return (
@@ -63,13 +117,15 @@ const MatchDetail: React.FC<MatchDetailProps> = ({
                 </a>
             </div>
 
-            <PlayerList match={match} />
+            <div className="bg-primary rounded-md mb-2">
+                <PlayerList match={match} />
+            </div>
 
             <div className="flex space-x-1 w-full h-20">
-                <Button onClick={() => {}} className="h-full w-full bg-green-600">
+                <Button onClick={handleAccept} disabled={isLoading} className="h-full w-full bg-green-600">
                     I&apos;m in!
                 </Button>
-                <Button onClick={() => {}} className="h-full w-full bg-red-600">
+                <Button onClick={handleDecline} disabled={isLoading} className="h-full w-full bg-red-600">
                     I&apos;m out!
                 </Button>
             </div>
