@@ -17,6 +17,10 @@ export async function POST(req: Request) {
             return new NextResponse("Invalid match ID", { status: 400 });
         }
 
+        if (currentUser.matchIds.includes(matchId)) {
+            return new NextResponse("You have accepted this match already", { status: 409 });
+        }
+
         let matches = [...(currentUser.matchIds || [])]
 
         matches.push(matchId);

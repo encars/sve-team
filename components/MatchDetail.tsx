@@ -38,12 +38,20 @@ const MatchDetail: React.FC<MatchDetailProps> = ({
                 variant: "default"
             });
         })
-        .catch(() => {
-            toast({
-                title: "Something went wrong",
-                description: "We could not accept the match",
-                variant: "destructive"
-            });
+        .catch((error) => {
+            if (error.response.status === 409) {
+                toast({
+                    title: "Match already accepted",
+                    description: "You have already accepted the match",
+                    variant: "destructive"
+                });
+            } else {
+                toast({
+                    title: "Something went wrong",
+                    description: "We could not accept the match",
+                    variant: "destructive"
+                });
+            }
         })
         .finally(() => {
             setIsLoading(false);
@@ -63,12 +71,20 @@ const MatchDetail: React.FC<MatchDetailProps> = ({
                 variant: "default"
             });
         })
-        .catch(() => {
-            toast({
-                title: "Something went wrong",
-                description: "We could not decline the match",
-                variant: "destructive"
-            });
+        .catch((error) => {
+            if (error.response.status === 409) {
+                toast({
+                    title: "Match already declined",
+                    description: "You have already declined the match",
+                    variant: "destructive"
+                });
+            } else {
+                toast({
+                    title: "Something went wrong",
+                    description: "We could not decline the match",
+                    variant: "destructive"
+                });
+            }
         })
         .finally(() => {
             setIsLoading(false);
