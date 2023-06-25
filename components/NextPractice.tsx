@@ -1,12 +1,22 @@
 "use client";
 
-interface NextPracticeProps {}
+import { Practice } from "@prisma/client";
+
+interface NextPracticeProps {
+    practice: Practice;
+}
 
 const NextPractice: React.FC<NextPracticeProps> = ({}) => {
     return (
-        <div>
-            <h1>Next Practice</h1>
-        </div>
+        <section className="flex flex-col space-y-2 p-2">
+            <div className="flex items-center justify-between mx-1">
+                <h1 className="text-primary-foreground text-xl">
+                    Next Practice:
+                </h1>
+            </div>
+
+            
+        </section>
     );
 };
 
