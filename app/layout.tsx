@@ -3,6 +3,7 @@ import { Roboto } from 'next/font/google';
 import { Toaster } from "@/components/ui/toaster";
 import Navbar from '@/components/Navbar';
 import getCurrentUser from '@/actions/getCurrentUser';
+import AuthContext from '@/context/AuthContext';
 
 const roboto = Roboto({ subsets: ['latin'], weight: "400" })
 
@@ -21,9 +22,11 @@ export default async function RootLayout({
 	return (
 		<html lang="en">
 			<body className={roboto.className}>
-				<Navbar currentUser={currentUser} />
-				{children}
-				<Toaster />
+				<AuthContext>
+					<Navbar currentUser={currentUser} />
+					{children}
+					<Toaster />
+				</AuthContext>
 			</body>
 		</html>
 	)

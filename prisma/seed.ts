@@ -4,37 +4,24 @@ import bcrypt from "bcrypt";
 const prisma = new PrismaClient();
 
 async function main() {
-    const hashedPassword = await bcrypt.hash("password123", 10);
+    const startDate = new Date(); // start from today
+    const endDate = new Date();
+    endDate.setFullYear(startDate.getFullYear() + 1); // end date is one year from now
 
-    // Create 10 players
-    for (let i = 1; i <= 10; i++) {
-        await prisma.user.create({
-            data: {
-                name: `player${i}`,
-                displayName: `Player ${i}`,
-                email: `player${i}@example.com`,
-                hashedPassword,
-                role: Role.PLAYER,
-                position: Position.FORWARD,
-                isReferee: i % 2 === 0,
-            }
-        })
-    }
+    for (let d = startDate; d <= endDate; d.setDate(d.getDate() + 1)) {
+        // if day of the week is Tuesday (2) or Thursday (4)
+        if (d.getDay() === 2 || d.getDay() === 4) {
+            const practiceDate = new Date(d);
+            practiceDate.setHours(20, 0, 0, 0); // set time to 20:00
 
-    // Create 15 matches
-    for (let i = 1; i <= 15; i++) {
-        const matchDate = new Date()
-        matchDate.setDate(matchDate.getDate() + i * 7) // Set the match date to be i weeks in the future
-
-        await prisma.match.create({
-            data: {
-                homeTeam: 'Home Team ' + i,
-                awayTeam: 'Away Team ' + i,
-                date: matchDate,
-                location: 'Location ' + i,
-                needRef: i % 2 === 0
-            }
-        })
+            await prisma.practice.create({
+                data: {
+                    date: practiceDate,
+                    location: 'Practice Location',
+                    notes: 'Regular practice',
+                },
+            });
+        }
     }
 }
 

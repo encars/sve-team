@@ -1,10 +1,13 @@
 import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
-export async function POST(req: Request) {
+interface IParams {
+    matchId: string;
+}
+
+export async function GET(req: Request, { params }: { params: IParams }) {
     try {
-        const body = await req.json();
-        const { id } = body;
+        const { matchId: id } = params;
     
         const players = await prisma.match.findUnique({
             where: {
