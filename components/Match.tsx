@@ -43,8 +43,8 @@ const Match: React.FC<MatchProps> = ({
                     {format(new Date(match.date), 'dd.MM.yy')}
                 </small>
                 <small className="flex items-center gap-2 text-primary-foreground font-mono">
-                    <Timer size={18} />
                     {format(new Date(match.date), 'HH:mm')}
+                    <Timer size={18} />
                 </small>
             </div>
 
