@@ -5,7 +5,7 @@ export default async function Profile() {
     const currentUser = await getCurrentUser();
 
     return (
-        <main className="pt-16 h-screen bg-primary p-2">
+        <main className="pt-16 h-screen bg-primary p-2 overflow-y-hidden">
             <UserProfile currentUser={currentUser} />
         </main>
     );

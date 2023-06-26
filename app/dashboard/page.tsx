@@ -1,4 +1,4 @@
-import getMatches from "@/actions/getMatches";
+import getMatches from "@/actions/getUpcomingMatches";
 import getNextPractice from "@/actions/getNextPractice";
 import NextPractice from "@/components/NextPractice";
 import UpcomingMatches from "@/components/UpcomingMatches";

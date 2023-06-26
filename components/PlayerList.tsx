@@ -64,7 +64,7 @@ const PlayerList: React.FC<PlayerListProps> = async ({
                                 <div key={player.id} className="flex items-center justify-around gap-2 px-4 py-2 capitalize bg-blue-950 rounded-md">
                                     <UserAvatar user={player} />
                                     <p className="flex-grow text-primary-foreground">
-                                        {player.name}
+                                        {player.displayName}
                                     </p>
                                     <p className="text-primary-foreground">
                                         {player.position === "GOLIE" && <GiGoalKeeper size={24} />}

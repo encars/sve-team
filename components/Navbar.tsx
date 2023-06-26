@@ -30,7 +30,7 @@ const Navbar: React.FC<NavbarProps> = ({
                         <MenubarTrigger>
                             <AlignJustify className="w-6 h-6" />
                         </MenubarTrigger>
-                        <MenubarContent>
+                        <MenubarContent className="bg-blue-950 border-muted-foreground mr-2 mt-2 foreground text-primary-foreground">
                             <MenubarItem>
                                 <Link href="/dashboard">
                                     Dashboard
@@ -41,15 +41,15 @@ const Navbar: React.FC<NavbarProps> = ({
                                     Matches
                                 </Link>
                             </MenubarItem>
-                            <MenubarSeparator />
+                            <MenubarSeparator className="bg-muted-foreground" />
                             <MenubarItem>
                                 <Link href="/profile">
                                     Profile
                                 </Link>
                             </MenubarItem>
-                            <MenubarSeparator />
+                            <MenubarSeparator className="bg-muted-foreground" />
                             <MenubarItem>
-                                <Button className="w-full" onClick={() => signOut()}>
+                                <Button variant="destructive" className="w-full" onClick={() => signOut()}>
                                     Sign out
                                 </Button>
                             </MenubarItem>
