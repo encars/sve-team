@@ -118,8 +118,8 @@ const MatchDetail: React.FC<MatchDetailProps> = ({
                         {format(new Date(match.date), 'dd.MM.yy')}
                     </h3>
                     <h3 className="flex items-center gap-2 text-primary-foreground font-mono">
-                        <Timer size={36} />
                         {format(new Date(match.date), 'HH:mm')}
+                        <Timer size={36} />
                     </h3>
                 </div>
 
