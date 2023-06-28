@@ -6,6 +6,7 @@ import { CalendarDays, ChevronLeft, MapPin, Timer } from "lucide-react";
 import { notFound, useRouter } from "next/navigation";
 import { Button } from "./ui/button";
 import { useState } from "react";
+import PracticeList from "./PracticeList";
 
 interface PracticeDetailProps {
     practice: Practice;
@@ -71,6 +72,8 @@ const PracticeDetail: React.FC<PracticeDetailProps> = ({
                     {practice.notes}
                 </small>
             </div>
+
+            <PracticeList practice={practice} />
 
             <div className="flex space-x-1 w-full h-20">
                 <Button onClick={handleAccept} disabled={isLoading} className="h-full w-full bg-green-600">
