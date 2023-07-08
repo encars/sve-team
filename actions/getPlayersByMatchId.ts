@@ -1,13 +1,19 @@
-import axios from "axios";
+import prisma from "@/lib/prisma";
 
 const getPlayersByMatchId = async (id: string) => {
     try {
-        const res = await axios.get(`/api/matches/${id}`);
+        const players = await prisma.user.findMany({
+            where: {
+                matchIds: {
+                    has: id,
+                },
+            },
+        });
 
-        const players = res.data;
-        
         return players;
-    } catch (error: any) {
+    } catch (error) {
+        console.error(error);
+
         return [];
     }
 };

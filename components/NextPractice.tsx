@@ -8,7 +8,7 @@ import { IoIosPeople, IoMdTime } from "react-icons/io";
 import { MdDateRange } from "react-icons/md";
 
 interface NextPracticeProps {
-    practice: Practice;
+    practice: Practice | null;
 }
 
 const NextPractice: React.FC<NextPracticeProps> = ({
@@ -16,13 +16,16 @@ const NextPractice: React.FC<NextPracticeProps> = ({
 }) => {
     const router = useRouter();
 
-    const date = new Date(practice.date);
-
-    const { formattedDate, time } = formatDateAndTime(date);
-
     const showPractice = (practiceId: string) => {
         router.push(`/practices/${practiceId}`);
     }
+
+    if (!practice) {
+        return null;
+    }
+
+    const date = new Date(practice.date);
+    const { formattedDate, time } = formatDateAndTime(date);
 
     return (
         <section className="flex flex-col space-y-2 p-2">

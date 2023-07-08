@@ -1,15 +1,18 @@
-import axios from "axios"
+import prisma from "@/lib/prisma";
 
 const getNextPractice = async () => {
-    try {
-        const res = await axios.get("http://192.168.2.141:3000/api/practices/next");
+    const currentDate = new Date();
+    const nextPractice = await prisma.practice.findFirst({
+        where: {
+            date: {
+                gt: currentDate,
+            },
+        },
+    });
 
-        const nextPractice = res.data;
+    if (!nextPractice) return null;
 
-        return nextPractice;
-    } catch (error: any) {
-        return null;
-    }
+    return nextPractice;
 }
 
 export default getNextPractice;

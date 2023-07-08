@@ -1,8 +1,10 @@
 import AllMatches from "@/components/AllMatches";
 import getAllMatches from "@/actions/getAllMatches";
 import { Match } from "@prisma/client"
+import getCurrentUser from "@/actions/getCurrentUser";
 
-export default async function Matches() {
+const MatchesPage = async () => {
+    const currentUser = await getCurrentUser();
     const matches: Match[] = await getAllMatches();
 
     return (
@@ -11,3 +13,5 @@ export default async function Matches() {
         </main>
     )
 }
+
+export default MatchesPage;

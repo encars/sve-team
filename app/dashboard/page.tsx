@@ -1,12 +1,20 @@
-import getMatches from "@/actions/getUpcomingMatches";
+import getCurrentUser from "@/actions/getCurrentUser";
 import getNextPractice from "@/actions/getNextPractice";
+import getUpcomingMatches from "@/actions/getUpcomingMatches";
 import NextPractice from "@/components/NextPractice";
 import UpcomingMatches from "@/components/UpcomingMatches";
 import { Match, Practice } from "@prisma/client";
+import { redirect } from "next/navigation";
 
-export default async function Dashboard() {
-    const matches: Match[] = await getMatches();
-    const nextPractice: Practice = await getNextPractice();
+const DashboardPage = async () => {
+    const currentUser = await getCurrentUser();
+
+    if (!currentUser) {
+        redirect("/");
+    }
+    
+    const matches: Match[] = await getUpcomingMatches();
+    const nextPractice: Practice | null = await getNextPractice();
 
     return (
         <main className="pt-16 h-screen bg-primary p-2">
@@ -15,3 +23,5 @@ export default async function Dashboard() {
         </main>
     )
 }
+
+export default DashboardPage;

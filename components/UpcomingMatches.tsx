@@ -1,11 +1,9 @@
-"use client";
-
 import { Match as MatchType } from "@prisma/client";
 import Match from "./Match";
 import { ArrowRight } from "lucide-react";
 import { buttonVariants } from "./ui/button";
 import Link from "next/link";
-import clsx from "clsx";
+import { cn } from "@/lib/utils";
 
 interface UpcomingMatchesProps {
     matches: MatchType[];
@@ -21,7 +19,7 @@ const UpcomingMatches: React.FC<UpcomingMatchesProps> = ({
                     Upcoming Matches:
                 </h1>
 
-                <Link href="/matches" className={clsx("gap-2", buttonVariants({ variant: "secondary" }))}>
+                <Link href="/matches" className={cn("gap-2", buttonVariants({ variant: "secondary" }))}>
                     View all
                     <ArrowRight size={18} />
                 </Link>

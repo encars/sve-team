@@ -1,24 +1,17 @@
-"use client";
-
-import { Match, User } from "@prisma/client";
+import { User } from "@prisma/client";
 import { FaBullseye, FaQuestion } from "react-icons/fa";
 import { GiCheckedShield, GiGoalKeeper, GiStrikingBalls } from "react-icons/gi";
-
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "./ui/accordion";
-import getPlayersByMatchId from "@/actions/getPlayersByMatchId";
 import UserAvatar from "./UserAvatar";
 import { IoIosPeople } from "react-icons/io";
 
 interface PlayerListProps {
-    match: Match;
+    players: User[];
 }
 
-const PlayerList: React.FC<PlayerListProps> = async ({
-    match
+const PlayerList: React.FC<PlayerListProps> = ({
+    players
 }) => {
-    const data = await getPlayersByMatchId(match.id);
-    const players = data.users;
-
     return (
         <Accordion type="single" collapsible className="w-full px-3">
             <AccordionItem value="playerlist">

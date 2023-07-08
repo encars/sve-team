@@ -1,33 +1,14 @@
-import getCurrentUser from "@/actions/getCurrentUser";
 import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
     try {
-        const currentUser = await getCurrentUser();
-
-        if (!currentUser) {
-            return new NextResponse("Unauthorized", { status: 401 });
-        }
-
         const body = await req.json();
-        const { matchId } = body;
-
-        if (!matchId || typeof matchId !== "string") {
-            return new NextResponse("Invalid match ID", { status: 400 });
-        }
-
-        if (currentUser.matchIds.includes(matchId)) {
-            return new NextResponse("You have accepted this match already", { status: 409 });
-        }
-
-        let matches = [...(currentUser.matchIds || [])]
-
-        matches.push(matchId);
+        const { matchId, matches, userId } = body;
 
         const updatedUser = await prisma.user.update({
             where: {
-                id: currentUser.id,
+                id: userId,
             },
             data: {
                 matchIds: {
@@ -43,7 +24,7 @@ export async function POST(req: Request) {
             data: {
                 users: {
                     connect: {
-                        id: currentUser.id,
+                        id: userId,
                     },
                 },
             },
