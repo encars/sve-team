@@ -1,19 +1,25 @@
 "use client";
 
 import { formatDateAndTime } from "@/lib/dateUtils";
-import { Practice } from "@prisma/client";
+import { Practice, User } from "@prisma/client";
 import { CalendarDays, ChevronLeft, MapPin, Timer } from "lucide-react";
 import { notFound, useRouter } from "next/navigation";
 import { Button } from "./ui/button";
 import { useState } from "react";
-import PracticeList from "./PracticeList";
+import PlayerList from "./PlayerList";
+import { toast } from "./ui/use-toast";
+import axios from "axios";
 
 interface PracticeDetailProps {
     practice: Practice;
-}
+    players: User[];
+    currentUser: User;
+};
 
 const PracticeDetail: React.FC<PracticeDetailProps> = ({
-    practice
+    practice,
+    players,
+    currentUser
 }) => {
     const router = useRouter();
     const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -26,11 +32,83 @@ const PracticeDetail: React.FC<PracticeDetailProps> = ({
     const { formattedDate, time } = formatDateAndTime(date);
 
     const handleAccept = async () => {
-        // TODO: Implement
+        try {
+            setIsLoading(true);
+
+            if (currentUser.practiceIds.includes(practice.id)) {
+                toast({
+                    title: "Practice already accepted",
+                    description: "You have already accepted the practice",
+                    variant: "destructive"
+                });
+            } else {
+                let practices = [...(currentUser.practiceIds || [])];
+                practices.push(practice.id);
+
+                await axios.post("/api/practices/accept", {
+                    practiceId: practice.id,
+                    practices: practices,
+                    userId: currentUser.id
+                });
+
+                toast({
+                    title: "Practice accepted",
+                    description: "You have successfully accepted the practice",
+                    variant: "success"
+                });
+            }
+        } catch (error: any) {
+            console.log(error);
+            toast({
+                title: "Error",
+                description: "Something went wrong",
+                variant: "destructive"
+            });
+        } finally {
+            setIsLoading(false);
+
+            router.refresh();
+        }
     }
 
     const handleDecline = async () => {
-        // TODO: Implement
+        try {
+            setIsLoading(true);
+
+            if (!currentUser.practiceIds.includes(practice.id)) {
+                toast({
+                    title: "Practice already declined",
+                    description: "You have already declined the practice",
+                    variant: "destructive"
+                });
+            } else {
+                let practices = [...(currentUser.practiceIds || [])];
+                practices = practices.filter(practiceId => practiceId !== practice.id);
+
+                await axios.post("/api/practices/decline", {
+                    practiceId: practice.id,
+                    practices: practices,
+                    userId: currentUser.id
+                });
+
+                toast({
+                    title: "Practice declined",
+                    description: "You have successfully declined the practice",
+                    variant: "success"
+                });
+            }
+        } catch (error: any) {
+            console.log(error);
+            toast({
+                title: "Error",
+                description: "Something went wrong",
+                variant: "destructive"
+            });
+        } finally {
+            setIsLoading(false);
+
+            router.refresh();
+        }
     }
 
     return (
@@ -73,7 +151,9 @@ const PracticeDetail: React.FC<PracticeDetailProps> = ({
                 </small>
             </div>
 
-            <PracticeList practice={practice} />
+            <div className="bg-primary rounded-md mb-2">
+                <PlayerList players={players} />
+            </div>
 
             <div className="flex space-x-1 w-full h-20">
                 <Button onClick={handleAccept} disabled={isLoading} className="h-full w-full bg-green-600">

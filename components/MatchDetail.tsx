@@ -17,7 +17,7 @@ interface MatchDetailProps {
     match: Match;
     players: User[];
     currentUser: User;
-}
+};
 
 const MatchDetail: React.FC<MatchDetailProps> = ({
     match,

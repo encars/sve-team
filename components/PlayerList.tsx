@@ -16,7 +16,7 @@ const PlayerList: React.FC<PlayerListProps> = ({
         <Accordion type="single" collapsible className="w-full px-3">
             <AccordionItem value="playerlist">
                 <AccordionTrigger>
-                    Match Lineup
+                    View Players
                 </AccordionTrigger>
                 <AccordionContent>
                     <div className="flex flex-col space-y-1 max-h-[290px] overflow-y-auto">

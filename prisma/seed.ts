@@ -12,7 +12,7 @@ async function main() {
         // if day of the week is Tuesday (2) or Thursday (4)
         if (d.getDay() === 2 || d.getDay() === 4) {
             const practiceDate = new Date(d);
-            practiceDate.setHours(20, 0, 0, 0); // set time to 20:00
+            practiceDate.setHours(19, 30, 0, 0); // set time to 19:30
 
             await prisma.practice.create({
                 data: {

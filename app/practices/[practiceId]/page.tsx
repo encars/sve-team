@@ -1,16 +1,15 @@
+import getCurrentUser from "@/actions/getCurrentUser";
+import getPlayersByPracticeId from "@/actions/getPlayersByPracticeId";
 import getPracticeById from "@/actions/getPracticeById";
 import PracticeDetail from "@/components/PracticeDetail";
 import { Practice } from "@prisma/client";
 import { notFound } from "next/navigation";
 
-interface PracticeProps {
-    params: {
-        practiceId: string;
-    }
-}
+const PracticePage = async ({ params }: { params: { practiceId: string } }) => {
+    const currentUser = await getCurrentUser();
 
-export default async function Practice({ params }: PracticeProps) {
     const practice: Practice | null = await getPracticeById(params.practiceId);
+    const players = await getPlayersByPracticeId(params.practiceId)
 
     if (!practice) {
         return notFound();
@@ -18,7 +17,9 @@ export default async function Practice({ params }: PracticeProps) {
 
     return (
         <main className="pt-16 h-screen bg-primary p-2">
-            <PracticeDetail practice={practice} />
+            <PracticeDetail practice={practice} players={players} currentUser={currentUser!} />
         </main>
     )
 }
+
+export default PracticePage;

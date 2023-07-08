@@ -4,33 +4,33 @@ import { NextResponse } from "next/server";
 export async function POST (req: Request) {
     try {
         const body = await req.json();
-        const { matchId, matches, userId } = body;
+        const { practiceId, practices, userId } = body;
 
         const updatedUser = await prisma.user.update({
             where: {
                 id: userId,
             },
             data: {
-                matchIds: {
-                    set: matches,
+                practiceIds: {
+                    set: practices,
                 },
             },
         });
 
-        const updatedMatch = await prisma.match.update({
+        const updatedPractice = await prisma.practice.update({
             where: {
-                id: matchId,
+                id: practiceId,
             },
             data: {
                 users: {
-                    connect: {
+                    disconnect: {
                         id: userId,
                     },
                 },
             },
         });
 
-        return new NextResponse("Match accepted", { status: 200 });
+        return new NextResponse("Practice declined", { status: 200 });
     } catch (error: any) {
         return new NextResponse("Internal server error", { status: 500 });
     }
