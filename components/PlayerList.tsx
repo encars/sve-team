@@ -7,16 +7,18 @@ import { IoIosPeople } from "react-icons/io";
 
 interface PlayerListProps {
     players: User[];
+    heading: string;
 }
 
 const PlayerList: React.FC<PlayerListProps> = ({
-    players
+    players,
+    heading
 }) => {
     return (
         <Accordion type="single" collapsible className="w-full px-3">
             <AccordionItem value="playerlist">
                 <AccordionTrigger>
-                    View Players
+                    {heading}
                 </AccordionTrigger>
                 <AccordionContent>
                     <div className="flex flex-col space-y-1 max-h-[290px] overflow-y-auto">

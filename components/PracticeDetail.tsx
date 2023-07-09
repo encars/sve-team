@@ -152,7 +152,7 @@ const PracticeDetail: React.FC<PracticeDetailProps> = ({
             </div>
 
             <div className="bg-primary rounded-md mb-2">
-                <PlayerList players={players} />
+                <PlayerList players={players} heading="View Lineup:" />
             </div>
 
             <div className="flex space-x-1 w-full h-20">
