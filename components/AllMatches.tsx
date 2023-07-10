@@ -19,6 +19,12 @@ const AllMatches: React.FC<AllMatchesProps> = ({
                 <Link href="/dashboard" className={buttonVariants({ variant: "secondary" })}>
                     <ArrowLeft size={18} />
                 </Link>
+
+                <h1 className="grow text-center text-primary-foreground text-2xl">
+                    All Matches
+                </h1>
+
+                <div className="w-12" />
             </div>
 
             <div className="flex flex-col space-y-2 p-1">

@@ -32,19 +32,24 @@ const Navbar: React.FC<NavbarProps> = ({
                         </MenubarTrigger>
                         <MenubarContent className="bg-blue-950 border-muted-foreground mr-2 mt-2 foreground text-primary-foreground">
                             <MenubarItem>
-                                <Link href="/dashboard">
+                                <Link className="w-full" href="/dashboard">
                                     Dashboard
                                 </Link>
                             </MenubarItem>
                             <MenubarItem>
-                                <Link href="/matches">
+                                <Link className="w-full" href="/matches">
                                     Matches
+                                </Link>
+                            </MenubarItem>
+                            <MenubarItem>
+                                <Link className="w-full" href="/roster">
+                                    Roster
                                 </Link>
                             </MenubarItem>
                             <MenubarSeparator className="bg-muted-foreground" />
                             <MenubarItem>
-                                <Link href="/profile">
-                                    Profile
+                                <Link className="w-full" href="/profile">
+                                    Your Profile
                                 </Link>
                             </MenubarItem>
                             <MenubarSeparator className="bg-muted-foreground" />

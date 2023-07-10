@@ -152,14 +152,14 @@ const PracticeDetail: React.FC<PracticeDetailProps> = ({
             </div>
 
             <div className="bg-primary rounded-md mb-2">
-                <PlayerList players={players} heading="View Lineup:" />
+                <PlayerList players={players} heading="View Lineup" />
             </div>
 
             <div className="flex space-x-1 w-full h-20">
-                <Button onClick={handleAccept} disabled={isLoading} className="h-full w-full bg-green-600">
+                <Button onClick={handleAccept} disabled={isLoading} className="h-full w-full bg-green-600 hover:bg-green-700">
                     Join practice
                 </Button>
-                <Button onClick={handleDecline} disabled={isLoading} className="h-full w-full bg-red-600">
+                <Button onClick={handleDecline} disabled={isLoading} className="h-full w-full bg-red-600 hover:bg-red-700">
                     Decline practice
                 </Button>
             </div>
