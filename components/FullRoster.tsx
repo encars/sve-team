@@ -30,7 +30,7 @@ const FullRoster: React.FC<FullRosterProps> = ({
 
             <PositionOverview players={roster} />
 
-            <div className="flex flex-col bg-blue-950 space-y-2 p-1">
+            <div className="flex flex-col bg-blue-950 space-y-2 p-1 md:grid md:grid-cols-3 lg:grid-cols-4 md:space-y-0 md:gap-2">
                 {roster.map((player) => (
                     <PlayerCard key={player.id} player={player} />
                 ))}
