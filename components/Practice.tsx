@@ -7,35 +7,24 @@ import { useRouter } from "next/navigation";
 import { IoIosPeople, IoMdTime } from "react-icons/io";
 import { MdDateRange } from "react-icons/md";
 
-interface NextPracticeProps {
-    practice: Practice | null;
-}
+interface PracticeProps {
+    practice: Practice;
+};
 
-const NextPractice: React.FC<NextPracticeProps> = ({
+const Practice: React.FC<PracticeProps> = ({
     practice
 }) => {
     const router = useRouter();
+
+    const date = new Date(practice.date);
+    const { formattedDate, time } = formatDateAndTime(date);
 
     const showPractice = (practiceId: string) => {
         router.push(`/practices/${practiceId}`);
     }
 
-    if (!practice) {
-        return null;
-    }
-
-    const date = new Date(practice.date);
-    const { formattedDate, time } = formatDateAndTime(date);
-
     return (
-        <section className="flex flex-col space-y-2 p-2">
-            <div className="flex items-center justify-between mx-1">
-                <h1 className="text-primary-foreground text-xl">
-                    Next Practice:
-                </h1>
-            </div>
-
-            <div onClick={() => showPractice(practice.id)} className="relative flex flex-col py-2 text-primary-foreground bg-blue-950 rounded-md cursor-pointer">
+        <div onClick={() => showPractice(practice.id)} className="relative flex flex-col py-2 text-primary-foreground bg-blue-950 rounded-md cursor-pointer">
                 <div className="flex justify-between items-center mx-4 mb-2">
                     <h1 className="flex items-center gap-2 text-primary-foreground font-mono text-lg">
                         <MdDateRange size={22} />
@@ -61,8 +50,7 @@ const NextPractice: React.FC<NextPracticeProps> = ({
 
                 
             </div>
-        </section>
     );
 };
 
-export default NextPractice;
+export default Practice;

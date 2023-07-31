@@ -1,9 +1,9 @@
 import prisma from "@/lib/prisma";
 
-const getMatches = async (number?: number) => {
+const getAllPractices = async () => {
     try {
         const currentDate = new Date();
-        const matches = await prisma.match.findMany({
+        const practices = await prisma.practice.findMany({
             where: {
                 date: {
                     gt: currentDate,
@@ -12,13 +12,13 @@ const getMatches = async (number?: number) => {
             orderBy: {
                 date: "asc",
             },
-            take: number || 100,
+            take: 10,
         });
 
-        return matches;
+        return practices;
     } catch (error: any) {
         return [];
     }
 };
 
-export default getMatches;
+export default getAllPractices;

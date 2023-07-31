@@ -30,7 +30,7 @@ const Navbar: React.FC<NavbarProps> = ({
                         <MenubarTrigger>
                             <AlignJustify className="w-6 h-6" />
                         </MenubarTrigger>
-                        <MenubarContent className="bg-blue-950 border-muted-foreground mr-2 mt-2 foreground text-primary-foreground">
+                        <MenubarContent className="bg-blue-950 border-none mr-2 mt-2 foreground text-primary-foreground">
                             <MenubarItem>
                                 <Link className="w-full" href="/dashboard">
                                     Dashboard

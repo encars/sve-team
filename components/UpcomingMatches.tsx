@@ -19,7 +19,7 @@ const UpcomingMatches: React.FC<UpcomingMatchesProps> = ({
                     Upcoming Matches:
                 </h1>
 
-                <Link href="/matches" className={cn("gap-2", buttonVariants({ variant: "secondary" }))}>
+                <Link href="/matches/all" className={cn("gap-2", buttonVariants({ variant: "secondary" }))}>
                     View all
                     <ArrowRight size={18} />
                 </Link>

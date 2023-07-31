@@ -1,37 +1,39 @@
-import { Match as MatchType } from "@prisma/client";
-import Match from "./Match";
+"use client";
+
+import { Practice as PracticeType } from "@prisma/client";
+import Link from "next/link";
 import { buttonVariants } from "./ui/button";
 import { ArrowLeft } from "lucide-react";
-import Link from "next/link";
+import Practice from "./Practice";
 
-interface AllMatchesProps {
-    matches: MatchType[];
-}
+interface AllPracticesProps {
+    practices: PracticeType[];
+};
 
-const AllMatches: React.FC<AllMatchesProps> = ({
-    matches
+const AllPractices: React.FC<AllPracticesProps> = ({
+    practices
 }) => {
     return (
         <section className="flex flex-col space-y-2 p-2">
             <div className="flex items-center justify-between mx-1">
-                <Link href="/matches" className={buttonVariants({ variant: "secondary" })}>
+                <Link href="/dashboard" className={buttonVariants({ variant: "secondary" })}>
                     <ArrowLeft size={18} />
                 </Link>
 
                 <h1 className="grow text-center text-primary-foreground text-2xl">
-                    All Matches
+                    All Practices
                 </h1>
 
                 <div className="w-12" />
             </div>
 
             <div className="flex flex-col space-y-2 p-1">
-                {matches.map((match) => (
-                    <Match key={match.id} match={match} />
+                {practices.map((practice) => (
+                    <Practice key={practice.id} practice={practice} />
                 ))}
             </div>
         </section>
     );
 };
 
-export default AllMatches;
+export default AllPractices;

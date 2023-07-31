@@ -1,15 +1,14 @@
-import getAllMatches from "@/actions/getAllMatches";
-import { Match } from "@prisma/client"
 import getCurrentUser from "@/actions/getCurrentUser";
-import UpcomingMatches from "@/components/UpcomingMatches";
+import getAllPractices from "@/actions/getAllPractices";
+import AllPractices from "@/components/AllPractices";
 
 const MatchesPage = async () => {
     const currentUser = await getCurrentUser();
-    const matches: Match[] = await getAllMatches(2);
+    const practices = await getAllPractices();
 
     return (
         <main className="pt-16 h-screen bg-primary p-2 overflow-y-auto">
-            <UpcomingMatches matches={matches} />
+            <AllPractices practices={practices} />
         </main>
     )
 }
