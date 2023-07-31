@@ -1,10 +1,18 @@
-import axios from "axios";
+import prisma from "@/lib/prisma";
 
 const getMatches = async () => {
     try {
-        const res = await axios.get("http://192.168.2.141:3000/api/matches/all");
-
-        const matches = res.data;
+        const currentDate = new Date();
+        const matches = await prisma.match.findMany({
+            where: {
+                date: {
+                    gt: currentDate,
+                },
+            },
+            orderBy: {
+                date: "asc",
+            },
+        });
 
         return matches;
     } catch (error: any) {

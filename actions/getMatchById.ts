@@ -1,13 +1,17 @@
 import prisma from "@/lib/prisma";
 
 const getMatchById = async (id: string) => {
-    const match = await prisma.match.findUnique({
-        where: {
-            id,
-        },
-    });
+    try {
+        const match = await prisma.match.findUnique({
+            where: {
+                id,
+            },
+        });
 
-    return match;
+        return match;
+    } catch (error: any) {
+        return null;
+    }
 };
 
 export default getMatchById;
