@@ -12,24 +12,10 @@ const AllMatches: React.FC<AllMatchesProps> = ({
     matches
 }) => {
     return (
-        <section className="flex flex-col space-y-2 p-2">
-            <div className="flex items-center justify-between mx-1">
-                <Link href="/matches" className={buttonVariants({ variant: "secondary" })}>
-                    <ArrowLeft size={18} />
-                </Link>
-
-                <h1 className="grow text-center text-primary-foreground text-2xl">
-                    All Matches
-                </h1>
-
-                <div className="w-12" />
-            </div>
-
-            <div className="flex flex-col space-y-2 p-1">
-                {matches.map((match) => (
-                    <Match key={match.id} match={match} />
-                ))}
-            </div>
+        <section className="flex flex-col space-y-3 p-4 text-primary bg-sveYellowDarker">
+            {matches.map((match) => (
+                <Match key={match.id} match={match} />
+            ))}
         </section>
     );
 };
