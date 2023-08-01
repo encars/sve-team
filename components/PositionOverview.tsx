@@ -13,24 +13,24 @@ const PositionOverview: React.FC<PositionOverviewProps> = ({
     players
 }) => {
     return (
-        <div className="flex items-center justify-between gap-2 px-4 py-2 mb-2">
-            <small className="flex items-center gap-2 text-primary-foreground">
+        <div className="flex items-center justify-between gap-2 px-4 py-2 bg-sveYellowDarker rounded-md shadow-md text-primary">
+            <small className="flex items-center gap-2">
                 <IoIosPeople size={24} />
                 {players.length}
             </small>
-            <small className="flex items-center gap-2 text-primary-foreground">
+            <small className="flex items-center gap-2">
                 <GiGoalKeeper size={24} />
                 {players.filter((player: User) => player.position === 'GOLIE').length}
             </small>
-            <small className="flex items-center gap-2 text-primary-foreground">
+            <small className="flex items-center gap-2">
                 <FaBullseye size={24} />
                 {players.filter((player: User) => player.position === 'CENTER').length}
             </small>
-            <small className="flex items-center gap-2 text-primary-foreground">
+            <small className="flex items-center gap-2">
                 <GiStrikingBalls size={24} />
                 {players.filter((player: User) => player.position === 'FORWARD').length}
             </small>
-            <small className="flex items-center gap-2 text-primary-foreground">
+            <small className="flex items-center gap-2">
                 <GiCheckedShield size={24} />
                 {players.filter((player: User) => player.position === 'DEFENDER').length}
             </small>
