@@ -33,7 +33,7 @@ const DashboardCard: React.FC<DashboardCardProps> = ({
     }
 
     return (
-        <Link href={cardLinks[type]} className="flex flex-col space-y-2 rounded-xl w-full bg-[#FDC427] p-4">
+        <Link href={cardLinks[type]} className="flex flex-col space-y-2 rounded-xl w-full bg-sveYellowDarker p-4">
             <div className="h-[200px] flex items-center justify-center rounded-xl p-4 bg-sveYellow">
                 {cardIcons[type]}
             </div>

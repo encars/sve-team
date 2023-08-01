@@ -23,6 +23,7 @@ module.exports = {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         sveYellow: "#FDCA40",
+        sveYellowDarker: "#FDC427",
         sveBlue: "#3772FF",
         primary: {
           DEFAULT: "hsl(var(--primary))",
