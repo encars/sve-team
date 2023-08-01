@@ -12,10 +12,10 @@ const FullRoster: React.FC<FullRosterProps> = ({
     roster
 }) => {
     return (
-        <section className="flex flex-col space-y-2 p-2 text-primary bg-sveYellow">
+        <section className="flex flex-col space-y-2 p-2 text-primary bg-sveYellowDarker">
             <PositionOverview players={roster} />
 
-            <div className="flex flex-col bg-sveYellowDarker rounded-md shadow-md space-y-3 p-2 md:grid md:grid-cols-3 lg:grid-cols-4 md:space-y-0 md:gap-2">
+            <div className="flex flex-col space-y-3 p-2 md:grid md:grid-cols-3 lg:grid-cols-4 md:space-y-0 md:gap-2">
                 {roster.map((player) => (
                     <PlayerCard key={player.id} player={player} />
                 ))}

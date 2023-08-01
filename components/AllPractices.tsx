@@ -14,24 +14,10 @@ const AllPractices: React.FC<AllPracticesProps> = ({
     practices
 }) => {
     return (
-        <section className="flex flex-col space-y-2 p-2">
-            <div className="flex items-center justify-between mx-1">
-                <Link href="/dashboard" className={buttonVariants({ variant: "secondary" })}>
-                    <ArrowLeft size={18} />
-                </Link>
-
-                <h1 className="grow text-center text-primary-foreground text-2xl">
-                    All Practices
-                </h1>
-
-                <div className="w-12" />
-            </div>
-
-            <div className="flex flex-col space-y-2 p-1">
-                {practices.map((practice) => (
-                    <Practice key={practice.id} practice={practice} />
-                ))}
-            </div>
+        <section className="flex flex-col space-y-3 p-4 text-primary bg-sveYellowDarker">
+            {practices.map((practice) => (
+                <Practice key={practice.id} practice={practice} />
+            ))}
         </section>
     );
 };

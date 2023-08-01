@@ -24,25 +24,25 @@ const Practice: React.FC<PracticeProps> = ({
     }
 
     return (
-        <div onClick={() => showPractice(practice.id)} className="relative flex flex-col py-2 text-primary-foreground bg-blue-950 rounded-md cursor-pointer">
+        <div onClick={() => showPractice(practice.id)} className="flex flex-col py-2 text-primary bg-sveYellow rounded-md cursor-pointer transition duration-300 hover:scale-105">
                 <div className="flex justify-between items-center mx-4 mb-2">
-                    <h1 className="flex items-center gap-2 text-primary-foreground font-mono text-lg">
+                    <h1 className="flex items-center gap-2 font-mono text-lg">
                         <MdDateRange size={22} />
                         {formattedDate}
                     </h1>
-                    <h1 className="flex items-center gap-2 text-primary-foreground font-mono text-lg">
+                    <h1 className="flex items-center gap-2 font-mono text-lg">
                         {time}
                         <IoMdTime size={22} />
                     </h1>
                 </div>
 
                 <div className="flex justify-between items-center mx-4">
-                    <small className="flex items-center gap-2 text-primary-foreground font-mono">
+                    <small className="flex items-center gap-2 font-mono">
                         <MapPin size={18} />
                         {practice.location}
                     </small>
 
-                    <small className="flex items-center gap-2 text-primary-foreground font-mono">
+                    <small className="flex items-center gap-2 font-mono">
                         {practice.userIds.length}
                         <IoIosPeople size={18} />
                     </small>
