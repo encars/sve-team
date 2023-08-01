@@ -1,9 +1,5 @@
 import { User } from "@prisma/client";
-import { FaBullseye, FaQuestion } from "react-icons/fa";
-import { GiCheckedShield, GiGoalKeeper, GiStrikingBalls } from "react-icons/gi";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "./ui/accordion";
-import UserAvatar from "./UserAvatar";
-import { IoIosPeople } from "react-icons/io";
 import PlayerCard from "./PlayerCard";
 import PositionOverview from "./PositionOverview";
 
@@ -19,17 +15,15 @@ const PlayerList: React.FC<PlayerListProps> = ({
     return (
         <Accordion type="single" collapsible className="w-full px-3">
             <AccordionItem value="playerlist">
-                <AccordionTrigger className="text-white">
+                <AccordionTrigger className="font-sans">
                     {heading}
                 </AccordionTrigger>
                 <AccordionContent>
-                    <div className="flex flex-col space-y-1 max-h-[290px] overflow-y-auto">
+                    <div className="flex flex-col space-y-1 max-h-[290px] overflow-y-auto overflow-x-hidden bg-sveYellowDarker p-2 rounded-md">
                         <PositionOverview players={players} />
                         {!players.length ? (
                             <div className="px-4 py-2">
-                                <p className="text-muted-foreground">
-                                    Looks like no one has signed up yet
-                                </p>
+                                Looks like no one has signed up yet
                             </div>
                         ) : (
                             players.sort((a: User, b: User) => {

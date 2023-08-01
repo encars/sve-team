@@ -7,7 +7,7 @@ import { notFound, useRouter } from "next/navigation";
 import { GiWhistle } from "react-icons/gi";
 import { Button } from "./ui/button";
 import PlayerList from "./PlayerList";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { toast } from "./ui/use-toast";
 import axios from "axios";
 
@@ -112,59 +112,61 @@ const MatchDetail: React.FC<MatchDetailProps> = ({
     }
 
     return (
-        <div className="relative flex flex-col p-4 text-primary-foreground bg-blue-950 rounded-md">
-            <div onClick={() => router.back()} className="absolute top-10 left-8 cursor-pointer">
-                <ChevronLeft size={36} />
-            </div>
-            <div className="absolute top-10 right-8">
-                {match.needRef && (
-                    <GiWhistle size={36} />
-                )}
-            </div>
-            <div className="flex flex-col items-center mx-4 mb-5">
-                <h1 className="font-mono text-2xl">
+        <div className="flex flex-col space-y-2 pt-4 text-center">
+            <div className="flex flex-col items-center mx-4 mb-5 text-primary-foreground">
+                <h1 className="font-sans font-bold text-2xl">
                     {match.homeTeam}
                 </h1>
                 vs
-                <h1 className="font-mono text-2xl">
+                <h1 className="font-sans font-bold text-2xl">
                     {match.awayTeam}
                 </h1>
             </div>
 
-            <div className="flex flex-col space-y-8 mb-8">
+            <section className="flex flex-col space-y-3 p-4 text-primary bg-sveYellowDarker">
                 <div className="flex items-center justify-between">
-                    <h3 className="flex items-center gap-2 text-primary-foreground font-mono">
+                    <h3 className="flex items-center gap-2 font-mono">
                         <CalendarDays size={36} />
                         {format(new Date(match.date), 'dd.MM.yy')}
                     </h3>
-                    <h3 className="flex items-center gap-2 text-primary-foreground font-mono">
+                    <h3 className="flex items-center gap-2 font-mono">
                         {format(new Date(match.date), 'HH:mm')}
                         <Timer size={36} />
                     </h3>
                 </div>
 
-                <a
-                    href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(match.location)}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-2 text-primary-foreground font-mono">
-                    <MapPin size={36} />
-                    {match.location}
-                </a>
-            </div>
+                <div className="flex items-center justify-between">
+                    <a
+                        href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(match.location)}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-2 font-mono truncate">
+                        <MapPin size={36} />
+                        {match.location}
+                    </a>
+                    {match.needRef && (
+                        <div className="flex items-center gap-2">
+                            <p className="font-mono">
+                                Ref needed!
+                            </p>
+                            <GiWhistle size={36} />
+                        </div>
+                    )}
+                </div>
 
-            <div className="bg-primary rounded-md mb-2">
-                <PlayerList players={players} heading="View Lineup" />
-            </div>
+                <div className="flex space-x-1 w-full h-14 font-sans">
+                    <Button onClick={handleAccept} disabled={isLoading} className="h-full w-full bg-green-600 hover:bg-green-700">
+                        I&apos;m in!
+                    </Button>
+                    <Button onClick={handleDecline} disabled={isLoading} className="h-full w-full bg-red-600 hover:bg-red-700">
+                        I&apos;m out!
+                    </Button>
+                </div>
 
-            <div className="flex space-x-1 w-full h-20">
-                <Button onClick={handleAccept} disabled={isLoading} className="h-full w-full bg-green-600 hover:bg-green-700">
-                    I&apos;m in!
-                </Button>
-                <Button onClick={handleDecline} disabled={isLoading} className="h-full w-full bg-red-600 hover:bg-red-700">
-                    I&apos;m out!
-                </Button>
-            </div>
+                <div className="bg-sveYellow rounded-md mb-2">
+                    <PlayerList players={players} heading="View Lineup" />
+                </div>
+            </section>
         </div>
     );
 };

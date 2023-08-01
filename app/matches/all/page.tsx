@@ -1,11 +1,9 @@
 import { Match } from "@prisma/client";
 
 import getAllMatches from "@/actions/getAllMatches";
-import getCurrentUser from "@/actions/getCurrentUser"
 import AllMatches from "@/components/AllMatches";
 
 const AllMatchesPage = async () => {
-    const currentUser = await getCurrentUser();
     const matches: Match[] = await getAllMatches();
 
     return (

@@ -1,9 +1,7 @@
-import getCurrentUser from "@/actions/getCurrentUser";
 import getRoster from "@/actions/getRoster";
 import FullRoster from "@/components/FullRoster";
 
 const RosterPage = async () => {
-    const currentUser = await getCurrentUser();
     const roster = await getRoster();
 
     return (

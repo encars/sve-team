@@ -14,7 +14,7 @@ const PlayerCard: React.FC<PlayerCardProps> = ({
     player
 }) => {
     return (
-        <div key={player.id} className="flex items-center justify-around gap-2 px-4 py-2 capitalize bg-sveYellow rounded-md shadow-md text-primary cursor-pointer transition duration-300 hover:scale-105">
+        <div key={player.id} className="flex items-center justify-between gap-2 px-4 py-2 capitalize bg-sveYellow rounded-md shadow-md text-primary cursor-pointer transition duration-300 hover:scale-105">
             <User2 className="w-8 h-8" />
             <p className="flex-grow font-sans font-semibold">
                 {player.displayName}

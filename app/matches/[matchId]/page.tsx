@@ -16,7 +16,7 @@ const MatchPage = async ({ params }: { params: { matchId: string } }) => {
     }
 
     return (
-        <main className="pt-16 h-screen bg-primary p-2">
+        <main className="pt-14 h-screen bg-primary overflow-y-auto flex flex-col">
             <MatchDetail match={match} players={players} currentUser={currentUser!} />
         </main>
     )
