@@ -13,6 +13,7 @@ export async function POST (req: Request) {
         }
 
         const body = await req.json();
+        
         const { name, displayName, password, role, position, isReferee, license } = body;
 
         const hashedPassword = await bcrypt.hash(password, 12);
@@ -31,6 +32,6 @@ export async function POST (req: Request) {
 
         return NextResponse.json(newUser, { status: 200 });
     } catch (error: any) {
-        return new NextResponse("Internal server error", { status: 500 });
+        return new NextResponse(error, { status: 500 });
     }
 }

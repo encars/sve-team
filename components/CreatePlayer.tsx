@@ -12,21 +12,26 @@ import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
 import { Label } from "./ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 import { Checkbox } from "./ui/checkbox";
+import { useState } from "react";
+import { toast } from "./ui/use-toast";
 
 const formSchema = z.object({
     name: z.string().min(1).max(255),
-    displayName: z.string().min(1).max(255).optional(),
+    displayName: z.string().min(1).max(255),
     password: z.string().min(8).max(255),
     role: z.enum(["PLAYER", "COACH"]),
-    position: z.enum(["GOLIE", "DEFENDER", "CENTER", "FORWARD"]).optional(),
+    position: z.enum(["GOLIE", "DEFENDER", "CENTER", "FORWARD"]),
     isReferee: z.boolean(),
-    license: z.string().min(0).max(255).optional(),
+    license: z.string().min(0).max(255),
 }).refine(data => (data.isReferee ? data.license !== "" : true), {
     message: "License is required for referees.",
     path: ["license"],
 });
 
 const CreatePlayer = () => {
+    const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -34,7 +39,7 @@ const CreatePlayer = () => {
             displayName: "",
             password: "",
             role: "PLAYER",
-            position: undefined,
+            position: "DEFENDER",
             isReferee: false,
             license: "",
         }
@@ -42,7 +47,9 @@ const CreatePlayer = () => {
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         try {
-            const res = await fetch("/api/players", {
+            setIsLoading(true);
+
+            const res = await fetch("/api/players/create", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -56,21 +63,36 @@ const CreatePlayer = () => {
 
             const data = await res.json();
 
-            console.log(data);
+            form.reset();
+            setIsDrawerOpen(false);
+
+            toast({
+                title: `Player ${data.name} created!`,
+                description: `Player ${data.name} has been created successfully.`,
+                variant: "success",
+            });
         } catch (err) {
             console.error(err);
+
+            toast({
+                title: "Something went wrong.",
+                description: "Something went wrong while creating the player.",
+                variant: "destructive",
+            });
+        } finally {
+            setIsLoading(false);
         }
     };
 
     return (
-        <Drawer.Root>
-            <Drawer.Trigger asChild>
+        <Drawer.Root open={isDrawerOpen}>
+            <Drawer.Trigger asChild onClick={() => setIsDrawerOpen(true)}>
                 <button className="flex items-center justify-center rounded-md shadow-md bg-green-600 w-10 h-10 transition duration-300 hover:scale-105 cursor-pointer">
                     <Plus className="w-6 h-6 text-primary-foreground" />
                 </button>
             </Drawer.Trigger>
             <Drawer.Portal>
-                <Drawer.Overlay className="fixed inset-0 bg-black/40" />
+                <Drawer.Overlay className="fixed inset-0 bg-black/40" onClick={() => setIsDrawerOpen(false)} />
                 <Drawer.Content className="bg-sveYellowDarker flex flex-col max-h-[85vh] rounded-t-[10px] mt-24 fixed bottom-0 left-0 right-0">
                     <div className="max-w-md w-full mx-auto flex flex-col overflow-auto p-4 bg-sveYellowDarker rounded-t-[10px] flex-1">
                         <Drawer.Title className="flex items-center font-sans font-bold text-2xl mb-4">
@@ -236,7 +258,7 @@ const CreatePlayer = () => {
                                         </FormItem>
                                     )}
                                 />
-                                <Button type="submit" className="w-full mt-4">
+                                <Button disabled={isLoading} type="submit" className="w-full mt-4">
                                     Create Player
                                 </Button>
                             </form>
