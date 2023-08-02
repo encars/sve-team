@@ -19,7 +19,6 @@ const AdminRosterPage = async () => {
 
             <div className="bg-sveYellowDarker p-2 flex flex-col space-y-2">
                 <PositionOverview players={players} />
-                <CreatePlayer />
                 <EditPlayers players={players} />
             </div>
         </main>
