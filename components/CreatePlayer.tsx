@@ -40,8 +40,26 @@ const CreatePlayer = () => {
         }
     });
 
-    const onSubmit = (values: z.infer<typeof formSchema>) => {
-        console.log(values)
+    const onSubmit = async (values: z.infer<typeof formSchema>) => {
+        try {
+            const res = await fetch("/api/players", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(values),
+            });
+
+            if (!res.ok) {
+                throw new Error("Something went wrong.");
+            }
+
+            const data = await res.json();
+
+            console.log(data);
+        } catch (err) {
+            console.error(err);
+        }
     };
 
     return (

@@ -31,7 +31,7 @@ export async function POST(req: Request) {
             },
         });
 
-        return new NextResponse("User updated", { status: 200 });
+        return NextResponse.json(updatedUser, { status: 200 });
     } catch (error: any) {
         return new NextResponse("Internal server error", { status: 500 });
     }
