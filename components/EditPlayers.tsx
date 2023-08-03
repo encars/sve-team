@@ -15,7 +15,7 @@ const EditPlayers: React.FC<EditPlayersProps> = ({
 }) => {
     return (
         <div className="flex flex-col bg-sveYellowDarker font-sans font-bold">
-            <div className="flex items-center justify-between bg-sveYellow rounded-t-md p-2">
+            <div className="flex items-center justify-between bg-sveYellow rounded-t-md p-2 px-4">
                 <p className="text-2xl">
                     Current Roster
                 </p>
@@ -24,7 +24,7 @@ const EditPlayers: React.FC<EditPlayersProps> = ({
             <div className="flex flex-col space-y-2 p-2 bg-sveYellow rounded-b-md">
                 {players.map((player) => (
                     <div key={player.id} className="flex items-center justify-between w-full p-2 rounded-md shadow-md bg-sveYellowDarker">
-                        <p>
+                        <p className="ml-2">
                             {player.position === "GOLIE" && <GiGoalKeeper size={24} />}
                             {player.position === "CENTER" && <FaBullseye size={24} />}
                             {player.position === "FORWARD" && <GiStrikingBalls size={24} />}
@@ -35,7 +35,7 @@ const EditPlayers: React.FC<EditPlayersProps> = ({
                             {player.displayName}
                         </p>
                         <p className="font-semibold font-mono text-lg">
-                            12
+                            {player.number || "N/A"}
                         </p>
                         <UpdatePlayer player={player} />
                     </div>

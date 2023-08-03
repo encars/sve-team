@@ -3,7 +3,7 @@
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Drawer } from "vaul";
-import { Edit, Plus, User } from "lucide-react";
+import { Edit, User } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "./ui/form";
 import { Input } from "./ui/input";
@@ -15,11 +15,13 @@ import { Checkbox } from "./ui/checkbox";
 import { useState } from "react";
 import { toast } from "./ui/use-toast";
 import { User as UserType } from "@prisma/client";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
     name: z.string().min(1).max(255),
     displayName: z.string().min(1).max(255),
-    password: z.string().min(8).max(255),
+    number: z.string().min(0).max(2),
+    password: z.string().min(0).max(255),
     role: z.enum(["PLAYER", "COACH"]),
     position: z.enum(["GOLIE", "DEFENDER", "CENTER", "FORWARD"]),
     isReferee: z.boolean(),
@@ -36,6 +38,8 @@ interface UpdatePlayerProps {
 const UpdatePlayer: React.FC<UpdatePlayerProps> = ({
     player
 }) => {
+    const router = useRouter();
+
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
 
@@ -44,6 +48,7 @@ const UpdatePlayer: React.FC<UpdatePlayerProps> = ({
         defaultValues: {
             name: player.name,
             displayName: player.displayName,
+            number: player.number ?? "",
             password: "",
             role: player.role,
             position: player.position ?? "GOLIE",
@@ -56,12 +61,12 @@ const UpdatePlayer: React.FC<UpdatePlayerProps> = ({
         try {
             setIsLoading(true);
 
-            const res = await fetch("/api/players/update", {
+            const res = await fetch("/api/admin/players/update", {
                 method: "PATCH",
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify(values),
+                body: JSON.stringify({ id: player.id, ...values }),
             });
 
             if (!res.ok) {
@@ -72,6 +77,7 @@ const UpdatePlayer: React.FC<UpdatePlayerProps> = ({
 
             form.reset();
             setIsDrawerOpen(false);
+            router.refresh();
 
             toast({
                 title: `Player ${data.name} updated!`,
@@ -121,30 +127,50 @@ const UpdatePlayer: React.FC<UpdatePlayerProps> = ({
                                                 <Input placeholder="player" {...field} />
                                             </FormControl>
                                             <FormDescription>
-                                                This is the name that will be used to log in.
+                                                The name will be used to log in.
                                             </FormDescription>
                                             <FormMessage />
                                         </FormItem>
                                     )}
                                 />
-                                <FormField
-                                    control={form.control}
-                                    name="displayName"
-                                    render={({ field }) => (
-                                        <FormItem>
-                                            <FormLabel className="font-sans font-bold text-lg">
-                                                Display Name
-                                            </FormLabel>
-                                            <FormControl>
-                                                <Input placeholder="slapshotter47" {...field} />
-                                            </FormControl>
-                                            <FormDescription>
-                                                This is the name that will be displayed on the roster.
-                                            </FormDescription>
-                                            <FormMessage />
-                                        </FormItem>
-                                    )}
-                                />
+                                <div className="flex items-center justify-between space-x-4">
+                                    <FormField
+                                        control={form.control}
+                                        name="displayName"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel className="font-sans font-bold text-lg">
+                                                    Display Name
+                                                </FormLabel>
+                                                <FormControl>
+                                                    <Input placeholder="slapshotter47" {...field} />
+                                                </FormControl>
+                                                <FormDescription>
+                                                    This is the name that will be displayed on the roster.
+                                                </FormDescription>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                    <FormField
+                                        control={form.control}
+                                        name="number"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel className="font-sans font-bold text-lg">
+                                                    Number
+                                                </FormLabel>
+                                                <FormControl>
+                                                    <Input type="number" placeholder="47" {...field} />
+                                                </FormControl>
+                                                <FormDescription>
+                                                    Every player needs a number.
+                                                </FormDescription>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                </div>
                                 <FormField
                                     control={form.control}
                                     name="password"
@@ -157,13 +183,13 @@ const UpdatePlayer: React.FC<UpdatePlayerProps> = ({
                                                 <Input type="password" placeholder="••••••••" {...field} />
                                             </FormControl>
                                             <FormDescription>
-                                                This is the password that will be used to log in.
+                                                The user will use this password to log in.
                                             </FormDescription>
                                             <FormMessage />
                                         </FormItem>
                                     )}
                                 />
-                                <div className="flex items-center">
+                                <div className="flex items-center justify-between">
                                     <FormField
                                         control={form.control}
                                         name="role"
@@ -185,7 +211,7 @@ const UpdatePlayer: React.FC<UpdatePlayerProps> = ({
                                                     </RadioGroup>
                                                 </FormControl>
                                                 <FormDescription>
-                                                    This is the role that will be assigned to the player. Coaches can access the admin panel and manage the roster.
+                                                    The role of the player.
                                                 </FormDescription>
                                                 <FormMessage />
                                             </FormItem>
@@ -221,7 +247,7 @@ const UpdatePlayer: React.FC<UpdatePlayerProps> = ({
                                                     </SelectContent>
                                                 </Select>
                                                 <FormDescription>
-                                                    This is the position that the player plays. It can be changed later.
+                                                    Primary position of the player.
                                                 </FormDescription>
                                                 <FormMessage />
                                             </FormItem>
@@ -266,7 +292,7 @@ const UpdatePlayer: React.FC<UpdatePlayerProps> = ({
                                     )}
                                 />
                                 <Button disabled={isLoading} type="submit" className="w-full mt-4">
-                                    Create Player
+                                    Update Player
                                 </Button>
                             </form>
                         </Form>

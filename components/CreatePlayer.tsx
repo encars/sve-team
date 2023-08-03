@@ -3,7 +3,7 @@
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Drawer } from "vaul";
-import { Plus, User } from "lucide-react";
+import { Plus, User, X } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "./ui/form";
 import { Input } from "./ui/input";
@@ -14,10 +14,12 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from ".
 import { Checkbox } from "./ui/checkbox";
 import { useState } from "react";
 import { toast } from "./ui/use-toast";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
     name: z.string().min(1).max(255),
     displayName: z.string().min(1).max(255),
+    number: z.string().min(0).max(2),
     password: z.string().min(8).max(255),
     role: z.enum(["PLAYER", "COACH"]),
     position: z.enum(["GOLIE", "DEFENDER", "CENTER", "FORWARD"]),
@@ -29,6 +31,8 @@ const formSchema = z.object({
 });
 
 const CreatePlayer = () => {
+    const router = useRouter();
+
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
 
@@ -37,6 +41,7 @@ const CreatePlayer = () => {
         defaultValues: {
             name: "",
             displayName: "",
+            number: "",
             password: "",
             role: "PLAYER",
             position: "DEFENDER",
@@ -49,7 +54,7 @@ const CreatePlayer = () => {
         try {
             setIsLoading(true);
 
-            const res = await fetch("/api/players/create", {
+            const res = await fetch("/api/admin/players/create", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -65,6 +70,7 @@ const CreatePlayer = () => {
 
             form.reset();
             setIsDrawerOpen(false);
+            router.refresh();
 
             toast({
                 title: `Player ${data.name} created!`,
@@ -92,12 +98,15 @@ const CreatePlayer = () => {
                 </button>
             </Drawer.Trigger>
             <Drawer.Portal>
-                <Drawer.Overlay className="fixed inset-0 bg-black/40" onClick={() => setIsDrawerOpen(false)} />
+                <Drawer.Overlay className="fixed inset-0 bg-black/40" />
                 <Drawer.Content className="bg-sveYellowDarker flex flex-col max-h-[85vh] rounded-t-[10px] mt-24 fixed bottom-0 left-0 right-0">
                     <div className="max-w-md w-full mx-auto flex flex-col overflow-auto p-4 bg-sveYellowDarker rounded-t-[10px] flex-1">
-                        <Drawer.Title className="flex items-center font-sans font-bold text-2xl mb-4">
-                            <User className="w-8 h-8 mr-2" />
-                            New Player
+                        <Drawer.Title className="flex items-center justify-between font-sans font-bold text-2xl mb-4">
+                            <div className="flex items-center">
+                                <User className="w-8 h-8 mr-2" />
+                                New Player
+                            </div>
+                            <X onClick={() => setIsDrawerOpen(false)} className="h-8 w-8 mr-2 text-red-600 transition duration-300 cursor-pointer hover:scale-105" />
                         </Drawer.Title>
 
                         <Form {...form}>
@@ -114,30 +123,50 @@ const CreatePlayer = () => {
                                                 <Input placeholder="player" {...field} />
                                             </FormControl>
                                             <FormDescription>
-                                                This is the name that will be used to log in.
+                                                The name will be used to log in.
                                             </FormDescription>
                                             <FormMessage />
                                         </FormItem>
                                     )}
                                 />
-                                <FormField
-                                    control={form.control}
-                                    name="displayName"
-                                    render={({ field }) => (
-                                        <FormItem>
-                                            <FormLabel className="font-sans font-bold text-lg">
-                                                Display Name
-                                            </FormLabel>
-                                            <FormControl>
-                                                <Input placeholder="slapshotter47" {...field} />
-                                            </FormControl>
-                                            <FormDescription>
-                                                This is the name that will be displayed on the roster.
-                                            </FormDescription>
-                                            <FormMessage />
-                                        </FormItem>
-                                    )}
-                                />
+                                <div className="flex items-center justify-between space-x-4">
+                                    <FormField
+                                        control={form.control}
+                                        name="displayName"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel className="font-sans font-bold text-lg">
+                                                    Display Name
+                                                </FormLabel>
+                                                <FormControl>
+                                                    <Input placeholder="slapshotter47" {...field} />
+                                                </FormControl>
+                                                <FormDescription>
+                                                    This is the name that will be displayed on the roster.
+                                                </FormDescription>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                    <FormField
+                                        control={form.control}
+                                        name="number"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel className="font-sans font-bold text-lg">
+                                                    Number
+                                                </FormLabel>
+                                                <FormControl>
+                                                    <Input type="number" placeholder="47" {...field} />
+                                                </FormControl>
+                                                <FormDescription>
+                                                    Every player needs a number.
+                                                </FormDescription>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                </div>
                                 <FormField
                                     control={form.control}
                                     name="password"
@@ -150,13 +179,13 @@ const CreatePlayer = () => {
                                                 <Input type="password" placeholder="••••••••" {...field} />
                                             </FormControl>
                                             <FormDescription>
-                                                This is the password that will be used to log in.
+                                                The user will use this password to log in.
                                             </FormDescription>
                                             <FormMessage />
                                         </FormItem>
                                     )}
                                 />
-                                <div className="flex items-center">
+                                <div className="flex items-center justify-between">
                                     <FormField
                                         control={form.control}
                                         name="role"
@@ -178,7 +207,7 @@ const CreatePlayer = () => {
                                                     </RadioGroup>
                                                 </FormControl>
                                                 <FormDescription>
-                                                    This is the role that will be assigned to the player. Coaches can access the admin panel and manage the roster.
+                                                    The role of the player.
                                                 </FormDescription>
                                                 <FormMessage />
                                             </FormItem>
@@ -214,7 +243,7 @@ const CreatePlayer = () => {
                                                     </SelectContent>
                                                 </Select>
                                                 <FormDescription>
-                                                    This is the position that the player plays. It can be changed later.
+                                                    Primary position of the player.
                                                 </FormDescription>
                                                 <FormMessage />
                                             </FormItem>

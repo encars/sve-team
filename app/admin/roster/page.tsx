@@ -1,5 +1,4 @@
 import getRoster from "@/actions/getRoster";
-import CreatePlayer from "@/components/CreatePlayer";
 import EditPlayers from "@/components/EditPlayers";
 import PositionOverview from "@/components/PositionOverview";
 
