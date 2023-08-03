@@ -3,10 +3,14 @@ import getPlayersByPracticeId from "@/actions/getPlayersByPracticeId";
 import getPracticeById from "@/actions/getPracticeById";
 import PracticeDetail from "@/components/PracticeDetail";
 import { Practice } from "@prisma/client";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 
 const PracticePage = async ({ params }: { params: { practiceId: string } }) => {
     const currentUser = await getCurrentUser();
+
+    if (!currentUser) {
+        redirect("/");
+    };
 
     const practice: Practice | null = await getPracticeById(params.practiceId);
     const players = await getPlayersByPracticeId(params.practiceId)

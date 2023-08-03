@@ -1,8 +1,16 @@
+import getCurrentUser from "@/actions/getCurrentUser";
 import getRoster from "@/actions/getRoster";
 import EditPlayers from "@/components/EditPlayers";
 import PositionOverview from "@/components/PositionOverview";
+import { redirect } from "next/navigation";
 
 const AdminRosterPage = async () => {
+    const currentUser = await getCurrentUser();
+
+    if (!currentUser || currentUser.role !== "COACH") {
+        redirect("/");
+    }
+
     const players = await getRoster();
 
     return (

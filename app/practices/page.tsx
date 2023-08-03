@@ -1,7 +1,15 @@
 import getAllPractices from "@/actions/getAllPractices";
+import getCurrentUser from "@/actions/getCurrentUser";
 import AllPractices from "@/components/AllPractices";
+import { redirect } from "next/navigation";
 
 const MatchesPage = async () => {
+    const currentUser = await getCurrentUser();
+
+    if (!currentUser) {
+        redirect("/");
+    };
+
     const practices = await getAllPractices();
 
     return (

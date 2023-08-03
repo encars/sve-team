@@ -30,7 +30,7 @@ const Navbar: React.FC<NavbarProps> = ({
                         <MenubarTrigger>
                             <AlignJustify className="w-6 h-6" />
                         </MenubarTrigger>
-                        <MenubarContent className="bg-blue-950 border-none mr-2 mt-2 foreground text-primary-foreground">
+                        <MenubarContent className="bg-blue-950 border-none shadow-md mr-2 mt-2 foreground text-primary-foreground">
                             <MenubarItem>
                                 <Link className="w-full" href="/dashboard">
                                     Dashboard
@@ -38,12 +38,17 @@ const Navbar: React.FC<NavbarProps> = ({
                             </MenubarItem>
                             <MenubarItem>
                                 <Link className="w-full" href="/matches">
-                                    Matches
+                                    Match Schedule
+                                </Link>
+                            </MenubarItem>
+                            <MenubarItem>
+                                <Link className="w-full" href="/practices">
+                                    Practice Schedule
                                 </Link>
                             </MenubarItem>
                             <MenubarItem>
                                 <Link className="w-full" href="/roster">
-                                    Roster
+                                    Team Roster
                                 </Link>
                             </MenubarItem>
                             <MenubarSeparator className="bg-muted-foreground" />
@@ -52,6 +57,14 @@ const Navbar: React.FC<NavbarProps> = ({
                                     Your Profile
                                 </Link>
                             </MenubarItem>
+                            <MenubarSeparator className="bg-muted-foreground" />
+                            {currentUser.role === "COACH" && (
+                                <MenubarItem>
+                                    <Link className="w-full" href="/admin">
+                                        Admin Panel
+                                    </Link>
+                                </MenubarItem>
+                            )}
                             <MenubarSeparator className="bg-muted-foreground" />
                             <MenubarItem>
                                 <Button variant="destructive" className="w-full" onClick={() => signOut()}>

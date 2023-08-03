@@ -3,10 +3,14 @@ import getMatchById from "@/actions/getMatchById";
 import getPlayersByMatchId from "@/actions/getPlayersByMatchId";
 import MatchDetail from "@/components/MatchDetail";
 import { Match } from "@prisma/client";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 
 const MatchPage = async ({ params }: { params: { matchId: string } }) => {
     const currentUser = await getCurrentUser();
+
+    if (!currentUser) {
+        redirect("/");
+    };
 
     const match: Match | null = await getMatchById(params.matchId);
     const players = await getPlayersByMatchId(params.matchId);
