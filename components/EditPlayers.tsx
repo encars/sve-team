@@ -13,6 +13,11 @@ interface EditPlayersProps {
 const EditPlayers: React.FC<EditPlayersProps> = ({
     players
 }) => {
+    const sortedPlayers = players.sort((a: User, b: User) => {
+        const order = ['GOLIE', 'CENTER', 'FORWARD', 'DEFENDER', null];
+        return order.indexOf(a.position) - order.indexOf(b.position);
+    });
+
     return (
         <div className="flex flex-col bg-sveYellowDarker font-sans font-bold">
             <div className="flex items-center justify-between bg-sveYellow rounded-t-md p-2 px-4">
@@ -22,7 +27,7 @@ const EditPlayers: React.FC<EditPlayersProps> = ({
                 <CreatePlayer />
             </div>
             <div className="flex flex-col space-y-2 p-2 bg-sveYellow rounded-b-md">
-                {players.map((player) => (
+                {sortedPlayers.map((player) => (
                     <div key={player.id} className="flex items-center justify-between w-full p-2 rounded-md shadow-md bg-sveYellowDarker">
                         <p className="ml-2">
                             {player.position === "GOLIE" && <GiGoalKeeper size={24} />}

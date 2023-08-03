@@ -59,13 +59,15 @@ const Navbar: React.FC<NavbarProps> = ({
                             </MenubarItem>
                             <MenubarSeparator className="bg-muted-foreground" />
                             {currentUser.role === "COACH" && (
-                                <MenubarItem>
-                                    <Link className="w-full" href="/admin">
-                                        Admin Panel
-                                    </Link>
-                                </MenubarItem>
+                                <>
+                                    <MenubarItem>
+                                        <Link className="w-full" href="/admin">
+                                            Admin Panel
+                                        </Link>
+                                    </MenubarItem>
+                                    <MenubarSeparator className="bg-muted-foreground" />
+                                </>
                             )}
-                            <MenubarSeparator className="bg-muted-foreground" />
                             <MenubarItem>
                                 <Button variant="destructive" className="w-full" onClick={() => signOut()}>
                                     Sign out
