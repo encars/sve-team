@@ -24,6 +24,7 @@ const formSchema = z.object({
     password: z.string().min(0).max(255),
     role: z.enum(["PLAYER", "COACH"]),
     position: z.enum(["GOLIE", "DEFENDER", "CENTER", "FORWARD"]),
+    stick: z.enum(["L", "R"]),
     isReferee: z.boolean(),
     license: z.string().min(0).max(255),
 }).refine(data => (data.isReferee ? data.license !== "" : true), {
@@ -52,6 +53,7 @@ const UpdatePlayer: React.FC<UpdatePlayerProps> = ({
             password: "",
             role: player.role,
             position: player.position ?? "GOLIE",
+            stick: player.stick ?? "L",
             isReferee: player.isReferee,
             license: player.license ?? "",
         }
@@ -171,24 +173,53 @@ const UpdatePlayer: React.FC<UpdatePlayerProps> = ({
                                         )}
                                     />
                                 </div>
-                                <FormField
-                                    control={form.control}
-                                    name="password"
-                                    render={({ field }) => (
-                                        <FormItem>
-                                            <FormLabel className="font-sans font-bold text-lg">
-                                                Password
-                                            </FormLabel>
-                                            <FormControl>
-                                                <Input type="password" placeholder="••••••••" {...field} />
-                                            </FormControl>
-                                            <FormDescription>
-                                                The user will use this password to log in.
-                                            </FormDescription>
-                                            <FormMessage />
-                                        </FormItem>
-                                    )}
-                                />
+                                <div className="flex items-center justify-between">
+                                    <FormField
+                                        control={form.control}
+                                        name="password"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel className="font-sans font-bold text-lg">
+                                                    Password
+                                                </FormLabel>
+                                                <FormControl>
+                                                    <Input type="password" placeholder="••••••••" {...field} />
+                                                </FormControl>
+                                                <FormDescription>
+                                                    The user will use this password to log in.
+                                                </FormDescription>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                    <FormField
+                                        control={form.control}
+                                        name="stick"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel className="font-sans font-bold text-lg">
+                                                    Stick
+                                                </FormLabel>
+                                                <FormControl>
+                                                    <RadioGroup className="flex" onValueChange={field.onChange} defaultValue={field.value}>
+                                                        <Label htmlFor="l" className="flex flex-col items-center justify-between rounded-md border-2 border-primary text-primary-foreground bg-primary p-3 cursor-pointer hover:bg-gray-800 [&:has([data-state=checked])]:border-white">
+                                                            <RadioGroupItem value="L" id="l" className="sr-only" checked={field.value === "L"} />
+                                                            <span>L</span>
+                                                        </Label>
+                                                        <Label htmlFor="r" className="flex flex-col items-center justify-between rounded-md border-2 border-primary text-primary-foreground bg-primary p-3 cursor-pointer hover:bg-gray-800 [&:has([data-state=checked])]:border-white">
+                                                            <RadioGroupItem value="R" id="r" className="sr-only" checked={field.value === "R"} />
+                                                            <span>R</span>
+                                                        </Label>
+                                                    </RadioGroup>
+                                                </FormControl>
+                                                <FormDescription>
+                                                    Stick hand
+                                                </FormDescription>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                </div>
                                 <div className="flex items-center justify-between">
                                     <FormField
                                         control={form.control}

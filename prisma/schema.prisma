@@ -22,17 +22,23 @@ enum Position {
   FORWARD
 }
 
+enum Orientation {
+  L
+  R
+}
+
 model User {
-  id             String    @id @default(auto()) @map("_id") @db.ObjectId
-  name           String    @unique
-  displayName    String    @default("Player")
+  id             String       @id @default(auto()) @map("_id") @db.ObjectId
+  name           String       @unique
+  displayName    String       @default("Player")
   number         String?
   email          String?
   image          String?
   hashedPassword String
-  role           Role      @default(PLAYER)
+  role           Role         @default(PLAYER)
   position       Position?
-  isReferee      Boolean   @default(false)
+  stick          Orientation?
+  isReferee      Boolean      @default(false)
   license        String?
 
   createdAt DateTime @default(now())

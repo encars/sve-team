@@ -36,12 +36,15 @@ const EditPlayers: React.FC<EditPlayersProps> = ({
                             {player.position === "DEFENDER" && <GiCheckedShield size={24} />}
                             {player.position === null && <FaQuestion size={24} />}
                         </p>
-                        <div className="flex items-center justify-between w-[50%]">
+                        <div className="grid grid-cols-3 space-x-10 w-[70%]">
                             <p className="font-normal">
                                 {player.displayName}
                             </p>
                             <p className="font-semibold font-mono text-lg">
-                                {player.number || "N/A"}
+                                {player.stick || "?"}
+                            </p>
+                            <p className="font-semibold font-mono text-lg">
+                                {player.number || "?"}
                             </p>
                         </div>
                         <UpdatePlayer player={player} />

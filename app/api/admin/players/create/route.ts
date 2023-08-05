@@ -14,7 +14,7 @@ export async function POST (req: Request) {
 
         const body = await req.json();
         
-        const { name, displayName, number, password, role, position, isReferee, license } = body;
+        const { name, displayName, number, password, role, position, stick, isReferee, license } = body;
 
         const hashedPassword = await bcrypt.hash(password, 12);
 
@@ -26,6 +26,7 @@ export async function POST (req: Request) {
                 hashedPassword,
                 role,
                 position,
+                stick,
                 isReferee,
                 license,
             },

@@ -13,9 +13,8 @@ export async function PATCH (req: Request) {
         }
 
         const body = await req.json();
-        console.log(body)
 
-        const { id, name, displayName, number, password, role, position, isReferee, license } = body;
+        const { id, name, displayName, number, password, role, position, stick, isReferee, license } = body;
 
         if (!password || typeof password !== "string") {
             const updatedUser = await prisma.user.update({
@@ -28,6 +27,7 @@ export async function PATCH (req: Request) {
                     number,
                     role,
                     position,
+                    stick,
                     isReferee,
                     license,
                 },
@@ -49,6 +49,7 @@ export async function PATCH (req: Request) {
                 hashedPassword,
                 role,
                 position,
+                stick,
                 isReferee,
                 license,
             },
