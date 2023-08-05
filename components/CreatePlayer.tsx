@@ -15,6 +15,7 @@ import { Checkbox } from "./ui/checkbox";
 import { useState } from "react";
 import { toast } from "./ui/use-toast";
 import { useRouter } from "next/navigation";
+import axios from "axios";
 
 const formSchema = z.object({
     name: z.string().min(1).max(255),
@@ -53,43 +54,29 @@ const CreatePlayer = () => {
     });
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
-        try {
-            setIsLoading(true);
+        setIsLoading(true);
+        
+        axios.post("/api/admin/players/create", values)
+            .then(() => {
+                setIsDrawerOpen(false);
+                router.refresh();
 
-            const res = await fetch("/api/admin/players/create", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(values),
+                toast({
+                    title: "Player created",
+                    description: "The player has been created.",
+                    variant: "success",
+                });
+            })
+            .catch(() => {
+                toast({
+                    title: "Error",
+                    description: "An error has occurred.",
+                    variant: "destructive",
+                });
+            })
+            .finally(() => {
+                setIsLoading(false);
             });
-
-            if (!res.ok) {
-                throw new Error("Something went wrong.");
-            }
-
-            const data = await res.json();
-
-            form.reset();
-            setIsDrawerOpen(false);
-            router.refresh();
-
-            toast({
-                title: `Player ${data.name} created!`,
-                description: `Player ${data.name} has been created successfully.`,
-                variant: "success",
-            });
-        } catch (err) {
-            console.error(err);
-
-            toast({
-                title: "Something went wrong.",
-                description: "Something went wrong while creating the player.",
-                variant: "destructive",
-            });
-        } finally {
-            setIsLoading(false);
-        }
     };
 
     return (

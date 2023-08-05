@@ -3,7 +3,7 @@
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Drawer } from "vaul";
-import { Edit, User } from "lucide-react";
+import { Edit, Trash2, User } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "./ui/form";
 import { Input } from "./ui/input";
@@ -16,6 +16,8 @@ import { useState } from "react";
 import { toast } from "./ui/use-toast";
 import { User as UserType } from "@prisma/client";
 import { useRouter } from "next/navigation";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "./ui/alert-dialog";
+import axios from "axios";
 
 const formSchema = z.object({
     name: z.string().min(1).max(255),
@@ -60,43 +62,66 @@ const UpdatePlayer: React.FC<UpdatePlayerProps> = ({
     });
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
-        try {
-            setIsLoading(true);
+        setIsLoading(true);
 
-            const res = await fetch("/api/admin/players/update", {
-                method: "PATCH",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ id: player.id, ...values }),
-            });
+        axios.post("/api/admin/players/update", {
+            data: {
+                id: player.id,
+                name: values.name,
+                displayName: values.displayName,
+                number: values.number,
+                password: values.password,
+                role: values.role,
+                position: values.position,
+                stick: values.stick,
+                isReferee: values.isReferee,
+                license: values.license,
+            },
+        })
+            .then(() => {
+                setIsDrawerOpen(false);
+                router.refresh();
 
-            if (!res.ok) {
-                throw new Error("Something went wrong.");
+                toast({
+                    title: `Player ${player.name} updated!`,
+                    description: `Player ${player.name} has been updated successfully.`,
+                    variant: "success",
+                });
+            })
+            .catch(err => {
+                throw new Error(err);
+            })
+            .finally(() => {
+                setIsLoading(false);
             }
+        );   
+    };
 
-            const data = await res.json();
+    const onDelete = async () => {
+        setIsLoading(true);
 
-            form.reset();
-            setIsDrawerOpen(false);
-            router.refresh();
+        axios.post("/api/admin/players/delete", {
+            data: {
+                id: player.id,
+            },
+        })
+            .then(() => {
+                setIsDrawerOpen(false);
+                router.refresh();
 
-            toast({
-                title: `Player ${data.name} updated!`,
-                description: `Player ${data.name} has been updated successfully.`,
-                variant: "success",
-            });
-        } catch (err) {
-            console.error(err);
-
-            toast({
-                title: "Something went wrong.",
-                description: "Something went wrong while updating the player.",
-                variant: "destructive",
-            });
-        } finally {
-            setIsLoading(false);
-        }
+                toast({
+                    title: `Player ${player.name} deleted!`,
+                    description: `Player ${player.name} has been deleted successfully.`,
+                    variant: "success",
+                });
+            })
+            .catch(err => {
+                throw new Error(err);
+            })
+            .finally(() => {
+                setIsLoading(false);
+            }
+        );
     };
 
     return (
@@ -110,9 +135,34 @@ const UpdatePlayer: React.FC<UpdatePlayerProps> = ({
                 <Drawer.Overlay className="fixed inset-0 bg-black/40" onClick={() => setIsDrawerOpen(false)} />
                 <Drawer.Content className="bg-sveYellowDarker flex flex-col max-h-[85vh] rounded-t-[10px] mt-24 fixed bottom-0 left-0 right-0">
                     <div className="max-w-md w-full mx-auto flex flex-col overflow-auto p-4 bg-sveYellowDarker rounded-t-[10px] flex-1">
-                        <Drawer.Title className="flex items-center font-sans font-bold text-2xl mb-4">
+                        <Drawer.Title className="flex items-center justify-between font-sans font-bold text-2xl mb-4">
                             <User className="w-8 h-8 mr-2" />
                             Update Player
+                            <AlertDialog>
+                                <AlertDialogTrigger asChild>
+                                    <Button variant="destructive">
+                                        <Trash2 className="w-5 h-5" />
+                                    </Button>
+                                </AlertDialogTrigger>
+                                <AlertDialogContent className="w-[80%]">
+                                    <AlertDialogHeader>
+                                        <AlertDialogTitle>
+                                            Delete Player
+                                        </AlertDialogTitle>
+                                        <AlertDialogDescription>
+                                            Are you sure you want to delete this player? This action cannot be undone.
+                                        </AlertDialogDescription>
+                                    </AlertDialogHeader>
+                                    <AlertDialogFooter>
+                                        <AlertDialogCancel>
+                                            Cancel
+                                        </AlertDialogCancel>
+                                        <AlertDialogAction onClick={onDelete}>
+                                            Delete
+                                        </AlertDialogAction>
+                                    </AlertDialogFooter>
+                                </AlertDialogContent>
+                            </AlertDialog>
                         </Drawer.Title>
 
                         <Form {...form}>

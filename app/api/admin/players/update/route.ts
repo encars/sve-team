@@ -4,7 +4,7 @@ import bcrypt from "bcrypt";
 import getCurrentUser from "@/actions/getCurrentUser";
 import prisma from "@/lib/prisma";
 
-export async function PATCH (req: Request) {
+export async function POST (req: Request) {
     try {
         const currentUser = await getCurrentUser();
 
@@ -14,7 +14,7 @@ export async function PATCH (req: Request) {
 
         const body = await req.json();
 
-        const { id, name, displayName, number, password, role, position, stick, isReferee, license } = body;
+        const { id, name, displayName, number, password, role, position, stick, isReferee, license } = body.data;
 
         if (!password || typeof password !== "string") {
             const updatedUser = await prisma.user.update({
