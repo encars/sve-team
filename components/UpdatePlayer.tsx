@@ -3,7 +3,7 @@
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Drawer } from "vaul";
-import { Edit, Trash2, User } from "lucide-react";
+import { Edit, Trash2, User, X } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "./ui/form";
 import { Input } from "./ui/input";
@@ -132,11 +132,11 @@ const UpdatePlayer: React.FC<UpdatePlayerProps> = ({
                 </Button>
             </Drawer.Trigger>
             <Drawer.Portal>
-                <Drawer.Overlay className="fixed inset-0 bg-black/40" onClick={() => setIsDrawerOpen(false)} />
+                <Drawer.Overlay className="fixed inset-0 bg-black/40" />
                 <Drawer.Content className="bg-sveYellowDarker flex flex-col max-h-[85vh] rounded-t-[10px] mt-24 fixed bottom-0 left-0 right-0">
                     <div className="max-w-md w-full mx-auto flex flex-col overflow-auto p-4 bg-sveYellowDarker rounded-t-[10px] flex-1">
                         <Drawer.Title className="flex items-center justify-between font-sans font-bold text-2xl mb-4">
-                            <User className="w-8 h-8 mr-2" />
+                            <X onClick={() => setIsDrawerOpen(false)} className="w-8 h-8 mr-2" />
                             Update Player
                             <AlertDialog>
                                 <AlertDialogTrigger asChild>
