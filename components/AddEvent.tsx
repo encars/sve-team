@@ -1,4 +1,4 @@
-import { Plus } from "lucide-react";
+import CreateEvent from "./CreateEvent";
 
 const AddEvent = () => {
     return (
@@ -7,9 +7,7 @@ const AddEvent = () => {
                 <p className="text-2xl">
                     Add an event
                 </p>
-                <button className="flex items-center justify-center rounded-md shadow-md bg-green-600 w-10 h-10 transition duration-300 hover:scale-105 cursor-pointer">
-                    <Plus className="w-6 h-6 text-primary-foreground" />
-                </button>
+                <CreateEvent />                
             </div>
         </div>
     );

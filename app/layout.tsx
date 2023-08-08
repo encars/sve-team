@@ -17,13 +17,10 @@ export default async function RootLayout({
 }: {
 	children: React.ReactNode
 }) {
-	const currentUser = await getCurrentUser();
-
 	return (
 		<html lang="en">
 			<body className={roboto.className}>
 				<AuthContext>
-					<Navbar currentUser={currentUser} />
 					{children}
 					<Toaster />
 				</AuthContext>

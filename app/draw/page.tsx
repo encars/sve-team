@@ -7,7 +7,7 @@ const FullField = dynamic(() => import ("./components/FullField"), {
     ssr: false,
 });
 
-const DrawPage = () => {
+const DrawPage = async () => {
     return (
         <div className="relative py-14 flex items-center overflow-hidden">
             <Toolbar />

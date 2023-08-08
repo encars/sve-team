@@ -61,14 +61,13 @@ const Auth = () => {
     return (
         <form onSubmit={handleSubmit} className="border p-12 border-muted-foreground rounded-md shadow-md shadow-blue-500 focus:shadow-lg hover:shadow-lg hover:shadow-blue-600 transition duration-300">
             <div className="flex flex-col space-y-2 mb-4">
-                <div className="flex flex-col items-center justify-between mb-6">
-                    <h1 className="text-primary-foreground text-3xl text-center">
+                <div className="flex flex-col items-center justify-between mb-4">
+                    <h1 className="font-serif text-primary-foreground text-3xl text-center">
                         Members only
                     </h1>
-                    <small className="text-muted-foreground">
+                    <small className="font-sans text-muted-foreground">
                         Please login to continue
                     </small>
-
                 </div>
                 <Label className="sr-only" htmlFor="username">
                     Username
@@ -80,7 +79,7 @@ const Auth = () => {
                     disabled={isLoading}
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
-                    className="text-white"
+                    className="text-white placeholder:text-muted-foreground transition duration-300 hover:shadow-md hover:shadow-sveYellow"
                 />
                 <Label className="sr-only" htmlFor="password">
                     Password
@@ -92,7 +91,7 @@ const Auth = () => {
                     disabled={isLoading}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="text-white"
+                    className="text-white placeholder:text-muted-foreground transition duration-300 hover:shadow-md hover:shadow-sveYellow"
                 />
             </div>
             <Button variant="secondary" disabled={isLoading} className="w-full">
