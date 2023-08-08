@@ -155,10 +155,10 @@ const MatchDetail: React.FC<MatchDetailProps> = ({
                 </div>
 
                 <div className="flex space-x-1 w-full h-14 font-sans">
-                    <Button onClick={handleAccept} disabled={isLoading} className="h-full w-full bg-green-600 hover:bg-green-700">
+                    <Button onClick={handleAccept} disabled={isLoading} className="h-full w-full shadow-md bg-green-600 hover:bg-green-700">
                         I&apos;m in!
                     </Button>
-                    <Button onClick={handleDecline} disabled={isLoading} className="h-full w-full bg-red-600 hover:bg-red-700">
+                    <Button onClick={handleDecline} disabled={isLoading} className="h-full w-full shadow-md bg-red-600 hover:bg-red-700">
                         I&apos;m out!
                     </Button>
                 </div>

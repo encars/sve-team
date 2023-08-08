@@ -17,11 +17,14 @@ const Navbar: React.FC<NavbarProps> = ({
 }) => {
     return (
         <nav className="fixed top-0 right-0 z-10 w-full bg-primary text-primary-foreground flex items-center justify-between p-2 border-b border-muted-foreground">
-            <Link href={currentUser ? "/dashboard" : "/"} className="flex items-center justify-start space-x-2 ml-2">
-                <Image src="/floorball.svg" alt="Logo" height={32} width={32} />
-                <p>
-                    SVE Floorball
+            <Link href={currentUser ? "/dashboard" : "/"} className="flex items-center space-x-2 ml-2">
+                <Image src="/logo.png" alt="Logo" height={32} width={32} />
+                <p className="font-serif font-bold text-sveYellow">
+                    SVE
                 </p>
+                <span className="font-serif font-bold text-sveBlue">
+                    Floorball
+                </span>
             </Link>
 
             {currentUser && (
@@ -38,7 +41,7 @@ const Navbar: React.FC<NavbarProps> = ({
                             </MenubarItem>
                             <MenubarItem>
                                 <Link className="w-full" href="/matches">
-                                    Match Schedule
+                                    Matches
                                 </Link>
                             </MenubarItem>
                             <MenubarItem>

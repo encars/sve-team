@@ -15,7 +15,7 @@ const DashboardPage = async () => {
     return (
         <main className="pt-14 h-screen bg-primary overflow-y-auto">
             <Welcome />
-            <div className="flex flex-col space-y-2 bg-sveYellow p-4">
+            <div className="flex flex-col md:flex-row space-y-2 bg-sveYellow p-4">
                 <DashboardCard type="match" />
                 <DashboardCard type="practice" />
                 <DashboardCard type="roster" />
