@@ -19,10 +19,10 @@ const Navbar: React.FC<NavbarProps> = ({
         <nav className="fixed top-0 right-0 z-10 w-full bg-primary text-primary-foreground flex items-center justify-between p-2 border-b border-muted-foreground">
             <Link href={currentUser ? "/dashboard" : "/"} className="flex items-center space-x-2 ml-2">
                 <Image src="/logo.png" alt="Logo" height={32} width={32} />
-                <p className="font-serif font-bold text-sveYellow">
+                <p className="font-sans font-bold text-lg text-sveYellow">
                     SVE
                 </p>
-                <span className="font-serif font-bold text-sveBlue">
+                <span className="font-sans font-bold text-lg text-sveBlue">
                     Floorball
                 </span>
             </Link>
