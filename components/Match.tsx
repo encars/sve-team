@@ -4,8 +4,9 @@ import { Match } from "@prisma/client";
 import { format } from "date-fns";
 import { CalendarDays, MapPin, Minus, Timer } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { GiWhistle } from "react-icons/gi";
 import { IoIosPeople } from "react-icons/io";
+import { Avatar, AvatarFallback } from "./ui/avatar";
+import { GiWhistle } from "react-icons/gi";
 
 interface MatchProps {
     match: Match;
@@ -21,7 +22,16 @@ const Match: React.FC<MatchProps> = ({
     }
 
     return (
-        <div onClick={() => showMatch(match.id)} className="flex flex-col py-2 text-primary bg-sveYellow rounded-md cursor-pointer transition duration-300 hover:scale-105">
+        <div onClick={() => showMatch(match.id)} className="relative flex flex-col py-2 text-primary bg-sveYellow rounded-md cursor-pointer transition duration-300 hover:scale-105">
+            {match.needRef && (
+                <div className="absolute -top-2 -right-2 shadow-md rounded-full">
+                    <Avatar>
+                        <AvatarFallback>
+                            <GiWhistle className="h-6 w-6" />
+                        </AvatarFallback>
+                    </Avatar>
+                </div>
+            )}
             <div className="flex justify-between items-center mx-4 mb-1">
                 <h1 className="font-sans font-bold text-lg flex-grow text-right pr-2">
                     {match.homeTeam}
@@ -38,7 +48,7 @@ const Match: React.FC<MatchProps> = ({
                     {format(new Date(match.date), 'dd.MM.yy')}
                 </small>
                 <small className="flex items-center gap-2  font-mono">
-                    {format(new Date(match.date), 'HH:mm')}
+                    {match.time}
                     <Timer size={18} />
                 </small>
             </div>

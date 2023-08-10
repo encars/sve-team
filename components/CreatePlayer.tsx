@@ -60,6 +60,7 @@ const CreatePlayer = () => {
             .then(() => {
                 setIsDrawerOpen(false);
                 router.refresh();
+                form.reset();
 
                 toast({
                     title: "Player created",

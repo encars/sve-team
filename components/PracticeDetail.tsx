@@ -1,6 +1,5 @@
 "use client";
 
-import { formatDateAndTime } from "@/lib/dateUtils";
 import { Practice, User } from "@prisma/client";
 import { CalendarDays, ChevronLeft, MapPin, Timer } from "lucide-react";
 import { notFound, useRouter } from "next/navigation";
@@ -9,6 +8,7 @@ import { useState } from "react";
 import PlayerList from "./PlayerList";
 import { toast } from "./ui/use-toast";
 import axios from "axios";
+import { format } from "date-fns";
 
 interface PracticeDetailProps {
     practice: Practice;
@@ -27,9 +27,6 @@ const PracticeDetail: React.FC<PracticeDetailProps> = ({
     if (!practice) {
         return notFound();
     }
-
-    const date = new Date(practice.date);
-    const { formattedDate, time } = formatDateAndTime(date);
 
     const handleAccept = async () => {
         try {
@@ -124,10 +121,10 @@ const PracticeDetail: React.FC<PracticeDetailProps> = ({
                 <div className="flex items-center justify-between">
                     <h3 className="flex items-center gap-2 text-primary-foreground font-mono">
                         <CalendarDays size={36} />
-                        {formattedDate}
+                        {format(new Date(practice.date), 'dd.MM.yy')}
                     </h3>
                     <h3 className="flex items-center gap-2 text-primary-foreground font-mono">
-                        {time}
+                        {practice.time}
                         <Timer size={36} />
                     </h3>
                 </div>

@@ -1,7 +1,7 @@
 "use client";
 
-import { formatDateAndTime } from "@/lib/dateUtils";
 import { Practice } from "@prisma/client";
+import { format } from "date-fns";
 import { MapPin } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { IoIosPeople, IoMdTime } from "react-icons/io";
@@ -16,9 +16,6 @@ const Practice: React.FC<PracticeProps> = ({
 }) => {
     const router = useRouter();
 
-    const date = new Date(practice.date);
-    const { formattedDate, time } = formatDateAndTime(date);
-
     const showPractice = (practiceId: string) => {
         router.push(`/practices/${practiceId}`);
     }
@@ -28,10 +25,10 @@ const Practice: React.FC<PracticeProps> = ({
                 <div className="flex justify-between items-center mx-4 mb-2">
                     <h1 className="flex items-center gap-2 font-mono text-lg">
                         <MdDateRange size={22} />
-                        {formattedDate}
+                        {format(new Date(practice.date), 'dd.MM.yy')}
                     </h1>
                     <h1 className="flex items-center gap-2 font-mono text-lg">
-                        {time}
+                        {practice.time}
                         <IoMdTime size={22} />
                     </h1>
                 </div>

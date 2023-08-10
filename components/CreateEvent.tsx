@@ -10,13 +10,14 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { Button } from "./ui/button";
-import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import { Calendar } from "./ui/calendar";
 import { Input } from "./ui/input";
 import { useRouter } from "next/navigation";
 import { Checkbox } from "./ui/checkbox";
 import { Textarea } from "./ui/textarea";
+import axios from "axios";
+import { toast } from "./ui/use-toast";
 
 const baseEventSchema = z.object({
     date: z.date(),
@@ -59,8 +60,31 @@ const CreateEvent = () => {
     });
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
-        console.log(values);
-    }
+        setIsLoading(true);
+
+        axios.post("/api/admin/matches/create", values)
+            .then(() => {
+                setIsDrawerOpen(false);
+                router.refresh();
+                form.reset();
+
+                toast({
+                    title: "Event created",
+                    description: "The event has been created successfully.",
+                    variant: "success",
+                });
+            })
+            .catch(() => {
+                toast({
+                    title: "Error",
+                    description: "There was an error creating the event.",
+                    variant: "destructive",
+                });
+            })
+            .finally(() => {
+                setIsLoading(false);
+            });
+    };
 
     return (
         <Drawer.Root open={isDrawerOpen}>

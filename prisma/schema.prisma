@@ -61,8 +61,10 @@ model Match {
   lineup   Json?
   score    String?
   date     DateTime
+  time     String
   location String
   needRef  Boolean  @default(false)
+  notes    String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -77,6 +79,7 @@ model Match {
 model Practice {
   id       String   @id @default(auto()) @map("_id") @db.ObjectId
   date     DateTime
+  time     String
   location String
   notes    String?
 
