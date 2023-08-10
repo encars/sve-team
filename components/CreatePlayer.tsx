@@ -305,7 +305,7 @@ const CreatePlayer = () => {
                                         </FormItem>
                                     )}
                                 />
-                                <Button disabled={isLoading} type="submit" className="w-full mt-4">
+                                <Button disabled={isLoading} type="submit" className="w-full mt-4 bg-green-600">
                                     Create Player
                                 </Button>
                             </form>
