@@ -147,7 +147,7 @@ const MatchDetail: React.FC<MatchDetailProps> = ({
                     {match.needRef && (
                         <div className="flex items-center gap-2">
                             <p className="font-mono">
-                                Ref needed!
+                                Refs needed!
                             </p>
                             <GiWhistle size={36} />
                         </div>
