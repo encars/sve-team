@@ -30,8 +30,8 @@ const PlayerCard: React.FC<PlayerCardProps> = ({
                     {player.displayName}
                 </p>
             </div>
-            <div className="flex items-center space-x-4">
-                <p className="font-semibold font-mono text-lg">
+            <div className="flex items-center space-x-4 font-semibold">
+                <p className="font-mono text-lg">
                     {player.stick || "?"}
                 </p>
                 <PlayerNumber number={player.number ?? "?"} />

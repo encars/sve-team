@@ -2,7 +2,7 @@
 
 import { Match, User } from "@prisma/client";
 import { format } from "date-fns";
-import { CalendarDays, ChevronLeft, MapPin, Timer } from "lucide-react";
+import { CalendarDays, Check, MapPin, StickyNote, Timer, X } from "lucide-react";
 import { notFound, useRouter } from "next/navigation";
 import { GiWhistle } from "react-icons/gi";
 import { Button } from "./ui/button";
@@ -10,6 +10,7 @@ import PlayerList from "./PlayerList";
 import { useState } from "react";
 import { toast } from "./ui/use-toast";
 import axios from "axios";
+import Notes from "./Notes";
 
 export const revalidate = 0;
 
@@ -118,53 +119,60 @@ const MatchDetail: React.FC<MatchDetailProps> = ({
                     {match.homeTeam}
                 </h1>
                 vs
-                <h1 className="font-sans font-bold text-2xl">
+                <h2 className="font-sans font-bold text-2xl">
                     {match.awayTeam}
-                </h1>
+                </h2>
             </div>
 
-            <section className="flex flex-col space-y-3 p-4 text-primary bg-sveYellowDarker">
-                <div className="flex items-center justify-between">
-                    <h3 className="flex items-center gap-2 font-mono">
-                        <CalendarDays size={36} />
-                        {format(new Date(match.date), 'dd.MM.yy')}
+            <section className="flex flex-col space-y-4 p-4 text-primary bg-sveYellowDarker">
+                <div className="flex flex-col space-y-6 p-4 bg-sveYellow rounded-md shadow-md">
+                    <div className="flex items-center justify-between">
+                        <h3 className="flex items-center gap-2 font-sans font-semibold">
+                            <CalendarDays className="w-8 h-8" />
+                            {format(new Date(match.date), 'dd.MM.yy')}
+                        </h3>
+                        <h3 className="flex items-center gap-2 font-sans font-semibold">
+                            {format(new Date(match.date), 'HH:mm')}
+                            <Timer className="w-8 h-8" />
+                        </h3>
+                    </div>
+
+                    <div className="flex items-center justify-between">
+                        <a
+                            href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(match.location)}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center gap-2 font-sans font-semibold truncate">
+                            <MapPin className="w-8 h-8" />
+                            {match.location}
+                        </a>
+                        {match.needRef && (
+                            <div className="flex items-center gap-2">
+                                <p className="font-sans font-semibold">
+                                    Refs needed!
+                                </p>
+                                <GiWhistle className="w-8 h-8" />
+                            </div>
+                        )}
+                    </div>
+                </div>
+
+                <PlayerList players={players} heading="View Lineup" />
+
+                <Notes notes={match.notes} />
+
+                <div className="flex flex-col space-y-4">
+                    <h3 className="text-center text-2xl font-serif font-bold">
+                        Are you in?
                     </h3>
-                    <h3 className="flex items-center gap-2 font-mono">
-                        {format(new Date(match.date), 'HH:mm')}
-                        <Timer size={36} />
-                    </h3>
-                </div>
-
-                <div className="flex items-center justify-between">
-                    <a
-                        href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(match.location)}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-2 font-mono truncate">
-                        <MapPin size={36} />
-                        {match.location}
-                    </a>
-                    {match.needRef && (
-                        <div className="flex items-center gap-2">
-                            <p className="font-mono">
-                                Refs needed!
-                            </p>
-                            <GiWhistle size={36} />
-                        </div>
-                    )}
-                </div>
-
-                <div className="flex space-x-1 w-full h-14 font-sans">
-                    <Button onClick={handleAccept} disabled={isLoading} className="h-full w-full shadow-md bg-green-600 hover:bg-green-700">
-                        I&apos;m in!
-                    </Button>
-                    <Button onClick={handleDecline} disabled={isLoading} className="h-full w-full shadow-md bg-red-600 hover:bg-red-700">
-                        I&apos;m out!
-                    </Button>
-                </div>
-
-                <div className="bg-sveYellow rounded-md mb-2">
-                    <PlayerList players={players} heading="View Lineup" />
+                    <div className="flex items-center justify-between space-x-2 h-20">
+                        <Button onClick={handleAccept} disabled={isLoading} className="w-full h-full shadow-md bg-green-600 hover:bg-green-700">
+                            <Check className="w-8 h-8" />
+                        </Button>
+                        <Button onClick={handleDecline} disabled={isLoading} className="w-full h-full shadow-md bg-red-600 hover:bg-red-700">
+                            <X className="w-8 h-8" />
+                        </Button>
+                    </div>
                 </div>
             </section>
         </div>

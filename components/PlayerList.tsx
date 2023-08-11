@@ -2,6 +2,7 @@ import { User } from "@prisma/client";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "./ui/accordion";
 import PlayerCard from "./PlayerCard";
 import PositionOverview from "./PositionOverview";
+import { Users } from "lucide-react";
 
 interface PlayerListProps {
     players: User[];
@@ -13,13 +14,16 @@ const PlayerList: React.FC<PlayerListProps> = ({
     heading
 }) => {
     return (
-        <Accordion type="single" collapsible className="w-full px-3">
+        <Accordion type="single" collapsible className="w-full px-4 shadow-md rounded-md bg-sveYellow">
             <AccordionItem value="playerlist">
-                <AccordionTrigger className="font-sans">
-                    {heading}
+                <AccordionTrigger className="font-sans font-semibold">
+                    <div className="flex items-center gap-4">
+                        <Users className="h-6 w-6" />
+                        {heading}
+                    </div>
                 </AccordionTrigger>
                 <AccordionContent>
-                    <div className="flex flex-col space-y-1 max-h-[290px] overflow-y-auto overflow-x-hidden bg-sveYellowDarker p-2 rounded-md">
+                    <div className="flex flex-col space-y-1 max-h-[290px] overflow-y-auto overflow-x-hidden rounded-md">
                         <PositionOverview players={players} />
                         {!players.length ? (
                             <div className="px-4 py-2">
