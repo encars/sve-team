@@ -4,9 +4,9 @@ const AddEvent = () => {
     return (
         <div className="flex flex-col bg-sveYellowDarker font-sans font-bold">
             <div className="flex items-center justify-between bg-sveYellow rounded-t-md p-2 px-4">
-                <p className="text-2xl">
+                <h2 className="text-2xl">
                     Add an event
-                </p>
+                </h2>
                 <CreateEvent />                
             </div>
         </div>
