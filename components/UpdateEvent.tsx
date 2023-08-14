@@ -1,14 +1,18 @@
-import { Edit } from "lucide-react";
-import EventFilters from "./EventFilters";
+import getMatches from "@/actions/getAllMatches";
+import EventDrawer from "./EventDrawer";
+import getAllPractices from "@/actions/getAllPractices";
 
-const UpdateEvent = () => {
+const UpdateEvent = async () => {
+    const matches = await getMatches();
+    const practices = await getAllPractices();
+
     return (
         <div className="flex flex-col bg-sveYellowDarker font-sans font-bold">
             <div className="flex items-center justify-between bg-sveYellow rounded-t-md p-2 px-4">
                 <h2 className="text-2xl">
-                    Update event
+                    Update an event
                 </h2>
-                <EventFilters />
+                <EventDrawer matches={matches} practices={practices} />
             </div>
 
         </div>

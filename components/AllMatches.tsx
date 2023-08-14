@@ -1,8 +1,5 @@
 import { Match as MatchType } from "@prisma/client";
 import Match from "./Match";
-import { buttonVariants } from "./ui/button";
-import { ArrowLeft } from "lucide-react";
-import Link from "next/link";
 
 interface AllMatchesProps {
     matches: MatchType[];
