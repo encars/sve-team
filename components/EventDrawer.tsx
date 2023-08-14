@@ -56,8 +56,17 @@ const EventDrawer: React.FC<EventDrawerProps> = ({
     }, [router, pathname, searchParams]);
 
     const handleSearch = () => {
-        console.log(searchQuery, type)
+        const search = searchQuery.toLowerCase();
 
+        const filteredEvents = type === "match"
+            ? matches.filter((match) => match.location.toLowerCase().includes(search)
+                || match.homeTeam.toLowerCase().includes(search)
+                || match.awayTeam.toLowerCase().includes(search))
+            : type === "practice"
+                ? practices.filter((practice) => practice.location.toLowerCase().includes(search))
+                : [...matches, ...practices].filter((event) => event.location.toLowerCase().includes(search));
+                
+        setEvents(filteredEvents);
     }
 
     return (
