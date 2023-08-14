@@ -138,14 +138,17 @@ const EventDrawer: React.FC<EventDrawerProps> = ({
                         </Button>
 
                         {/* Display Results */}
-                        <div className="flex flex-col space-y-2 p-2 rounded-md shadow-md bg-sveYellow font-sans">
+                        <div className="flex flex-col space-y-2 p-4 rounded-md shadow-md bg-sveYellow font-sans">
                             {matches.map((match) => (
                                 <Link key={match.id} href={`/admin/events/${match.id}`} className="flex items-center justify-between p-2 rounded-md border-2 border-sveYellowDarker transition duration-300 hover:scale-105">
                                     <div className="flex items-center font-semibold">
                                         <Swords className="h-4 w-4 mr-2" />
                                         {match.homeTeam} - {match.awayTeam}
                                     </div>
-                                    {match.location}
+                                    <div className="flex items-center text-right">
+                                        {match.location}
+                                        <MapPin className="h-4 w-4 ml-2" />
+                                    </div>
                                 </Link>
                             ))}
                             {practices.map((practice) => (
@@ -158,7 +161,7 @@ const EventDrawer: React.FC<EventDrawerProps> = ({
                                             year: "2-digit"
                                         })}
                                     </div>
-                                    <div className="flex items-center">
+                                    <div className="flex items-center text-right">
                                         {practice.location}
                                         <MapPin className="h-4 w-4 ml-2" />
                                     </div>
