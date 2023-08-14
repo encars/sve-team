@@ -81,7 +81,7 @@ const EventDrawer: React.FC<EventDrawerProps> = ({
     return (
         <Drawer.Root open={isDrawerOpen}>
             <Drawer.Trigger asChild onClick={() => setIsDrawerOpen(true)}>
-                <button className="flex items-center justify-center rounded-md shadow-md bg-yellow-300 w-10 h-10 transition duration-300 hover:scale-105 cursor-pointer">
+                <button className="flex items-center justify-center rounded-md shadow-md bg-blue-500 text-white w-10 h-10 transition duration-300 hover:scale-105 cursor-pointer">
                     <Edit className="w-6 h-6" />
                 </button>
             </Drawer.Trigger>

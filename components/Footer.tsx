@@ -9,7 +9,7 @@ const Footer = () => {
                 <Twitch />
             </div>
             <p className="font-mono">
-                &copy; 2021 SVE Hamburg
+                &copy; 2023 SVE Hamburg
             </p>
         </footer>
     );
