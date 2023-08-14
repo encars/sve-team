@@ -1,6 +1,6 @@
 "use client";
 
-import { Edit, X } from "lucide-react";
+import { Book, Edit, MapPin, Swords, X } from "lucide-react";
 import { useCallback, useState } from "react";
 import { Drawer } from "vaul";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -12,19 +12,20 @@ import { Match, Practice } from "@prisma/client";
 import Link from "next/link";
 
 interface EventDrawerProps {
-    matches: Match[];
-    practices: Practice[];
+    initialMatches: Match[];
+    initialPractices: Practice[];
 };
 
 const EventDrawer: React.FC<EventDrawerProps> = ({
-    matches,
-    practices
+    initialMatches,
+    initialPractices
 }) => {
     const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
 
-    const [events, setEvents] = useState<Array<Match | Practice>>([...matches, ...practices]);
+    const [matches, setMatches] = useState<Match[]>(initialMatches);
+    const [practices, setPractices] = useState<Practice[]>(initialPractices);
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
 
@@ -57,16 +58,24 @@ const EventDrawer: React.FC<EventDrawerProps> = ({
 
     const handleSearch = () => {
         const search = searchQuery.toLowerCase();
+        let filteredMatches = initialMatches;
+        let filteredPractices = initialPractices;
 
-        const filteredEvents = type === "match"
-            ? matches.filter((match) => match.location.toLowerCase().includes(search)
-                || match.homeTeam.toLowerCase().includes(search)
-                || match.awayTeam.toLowerCase().includes(search))
-            : type === "practice"
-                ? practices.filter((practice) => practice.location.toLowerCase().includes(search))
-                : [...matches, ...practices].filter((event) => event.location.toLowerCase().includes(search));
-                
-        setEvents(filteredEvents);
+        switch (type) {
+            case "match":
+                filteredMatches = initialMatches.filter((match) => match.homeTeam.toLowerCase().includes(search) || match.awayTeam.toLowerCase().includes(search) || match.location.toLowerCase().includes(search));
+                break;
+            case "practice":
+                filteredPractices = initialPractices.filter((practice) => practice.location.toLowerCase().includes(search));
+                break;
+            default:
+                filteredMatches = initialMatches.filter((match) => match.homeTeam.toLowerCase().includes(search) || match.awayTeam.toLowerCase().includes(search) || match.location.toLowerCase().includes(search));
+                filteredPractices = initialPractices.filter((practice) => practice.location.toLowerCase().includes(search));
+                break;
+        }
+
+        setMatches(filteredMatches);
+        setPractices(filteredPractices);
     }
 
     return (
@@ -129,10 +138,30 @@ const EventDrawer: React.FC<EventDrawerProps> = ({
                         </Button>
 
                         {/* Display Results */}
-                        <div className="flex flex-col space-y-2 p-2 rounded-md shadow-md bg-sveYellow">
-                            {events.map((event) => (
-                                <Link key={event.id} href={`/admin/events/${event.id}`} className="">
-                                    {event.location}
+                        <div className="flex flex-col space-y-2 p-2 rounded-md shadow-md bg-sveYellow font-sans">
+                            {matches.map((match) => (
+                                <Link key={match.id} href={`/admin/events/${match.id}`} className="flex items-center justify-between p-2 rounded-md border-2 border-sveYellowDarker transition duration-300 hover:scale-105">
+                                    <div className="flex items-center font-semibold">
+                                        <Swords className="h-4 w-4 mr-2" />
+                                        {match.homeTeam} - {match.awayTeam}
+                                    </div>
+                                    {match.location}
+                                </Link>
+                            ))}
+                            {practices.map((practice) => (
+                                <Link key={practice.id} href={`/admin/events/${practice.id}`} className="flex items-center justify-between p-2 rounded-md border-2 border-sveYellowDarker transition duration-300 hover:scale-105">
+                                    <div className="flex items-center font-semibold">
+                                        <Book className="h-4 w-4 mr-2" />
+                                        {practice.date.toLocaleDateString("en-GB", {
+                                            day: "2-digit",
+                                            month: "2-digit",
+                                            year: "2-digit"
+                                        })}
+                                    </div>
+                                    <div className="flex items-center">
+                                        {practice.location}
+                                        <MapPin className="h-4 w-4 ml-2" />
+                                    </div>
                                 </Link>
                             ))}
                         </div>

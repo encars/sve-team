@@ -12,7 +12,7 @@ const UpdateEvent = async () => {
                 <h2 className="text-2xl">
                     Update an event
                 </h2>
-                <EventDrawer matches={matches} practices={practices} />
+                <EventDrawer initialMatches={matches} initialPractices={practices} />
             </div>
 
         </div>
