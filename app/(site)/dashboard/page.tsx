@@ -19,6 +19,7 @@ const DashboardPage = async () => {
                 <DashboardCard type="match" />
                 <DashboardCard type="practice" />
                 <DashboardCard type="roster" />
+                <DashboardCard type="playbook" />
             </div>
             <Footer />
         </main>

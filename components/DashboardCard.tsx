@@ -1,8 +1,8 @@
-import { Calendar, Dumbbell, Users2 } from "lucide-react";
+import { Book, Calendar, Dumbbell, Users2 } from "lucide-react";
 import Link from "next/link";
 
 interface DashboardCardProps {
-    type: "match" | "practice" | "roster";
+    type: "match" | "practice" | "roster" | "playbook";
 };
 
 const DashboardCard: React.FC<DashboardCardProps> = ({
@@ -12,24 +12,28 @@ const DashboardCard: React.FC<DashboardCardProps> = ({
         match: "Upcoming Matches",
         practice: "Practice Schedule",
         roster: "Roster & Info",
+        playbook: "Playbook",
     }
 
     const cardDescriptions = {
         match: "Be ready to dominate",
         practice: "Refine your skills",
         roster: "Know your teammates",
+        playbook: "Know your plays",
     }
 
     const cardLinks = {
         match: "/matches",
         practice: "/practices",
         roster: "/roster",
+        playbook: "/playbook",
     }
 
     const cardIcons = {
         match: <Calendar className="h-16 w-16" />,
         practice: <Dumbbell className="h-16 w-16" />,
         roster: <Users2 className="h-16 w-16" />,
+        playbook: <Book className="h-16 w-16" />,
     }
 
     return (
