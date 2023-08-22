@@ -27,6 +27,23 @@ enum Orientation {
   R
 }
 
+enum Category {
+  OFFENSIVE
+  DEFENSIVE
+  TRANSITION
+  GOALIE
+  FITNESS
+}
+
+enum Tag {
+  SHOOTING
+  PASSING
+  POSITIONING
+  REFLEXES
+  AGILITY
+  COUNTER_ATTACK
+}
+
 model User {
   id             String       @id @default(auto()) @map("_id") @db.ObjectId
   name           String       @unique
@@ -88,4 +105,17 @@ model Practice {
 
   userIds String[] @db.ObjectId
   users   User[]   @relation(fields: [userIds], references: [id])
+}
+
+model Drill {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  category    Category
+  tags        Tag[]
+  image       String?
+  description String
+  setup       String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
