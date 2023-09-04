@@ -16,10 +16,11 @@ export async function POST (req: Request) {
         const { type, date, time, location, notes } = body;
 
         if (type === "MATCH") {
-            const { homeTeam, awayTeam, needRef } = body;
+            const { field, homeTeam, awayTeam, needRef } = body;
 
             const newMatch = await prisma.match.create({
                 data: {
+                    field,
                     homeTeam,
                     awayTeam,
                     date,

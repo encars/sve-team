@@ -18,6 +18,7 @@ import { Checkbox } from "./ui/checkbox";
 import { Textarea } from "./ui/textarea";
 import axios from "axios";
 import { toast } from "./ui/use-toast";
+import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
 
 const baseEventSchema = z.object({
     date: z.date(),
@@ -28,6 +29,7 @@ const baseEventSchema = z.object({
 
 const matchEventSchema = baseEventSchema.extend({
     type: z.literal("MATCH"),
+    field: z.enum(["GF", "KF"]),
     homeTeam: z.string().min(1).max(255),
     awayTeam: z.string().min(1).max(255),
     needRef: z.boolean(),
@@ -49,6 +51,7 @@ const CreateEvent = () => {
         resolver: zodResolver(formSchema),
         defaultValues: {
             type: "MATCH",
+            field: "GF",
             date: new Date(),
             time: "",
             location: "",
@@ -107,36 +110,75 @@ const CreateEvent = () => {
 
                         <Form {...form}>
                             <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col space-y-4 text-primary">
-                                <FormField
-                                    control={form.control}
-                                    name="type"
-                                    render={({ field }) => (
-                                        <FormItem>
-                                            <FormLabel className="font-sans font-bold text-lg">
-                                                Type
-                                            </FormLabel>
-                                            <Select onValueChange={field.onChange} defaultValue={field.value}>
-                                                <FormControl>
-                                                    <SelectTrigger>
-                                                        <SelectValue placeholder="Select a type" />
-                                                    </SelectTrigger>
-                                                </FormControl>
-                                                <SelectContent>
-                                                    <SelectItem value="MATCH">
-                                                        Match
-                                                    </SelectItem>
-                                                    <SelectItem value="PRACTICE">
-                                                        Practice
-                                                    </SelectItem>
-                                                </SelectContent>
-                                            </Select>
-                                            <FormDescription>
-                                                Match or practice?
-                                            </FormDescription>
-                                            <FormMessage />
-                                        </FormItem>
+                                <div className="flex justify-between">
+                                    <FormField
+                                        control={form.control}
+                                        name="type"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel className="font-sans font-bold text-lg">
+                                                    Type
+                                                </FormLabel>
+                                                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                                    <FormControl>
+                                                        <SelectTrigger>
+                                                            <SelectValue placeholder="Select a type" />
+                                                        </SelectTrigger>
+                                                    </FormControl>
+                                                    <SelectContent>
+                                                        <SelectItem value="MATCH">
+                                                            Match
+                                                        </SelectItem>
+                                                        <SelectItem value="PRACTICE">
+                                                            Practice
+                                                        </SelectItem>
+                                                    </SelectContent>
+                                                </Select>
+                                                <FormDescription>
+                                                    Match or practice?
+                                                </FormDescription>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                    {form.watch("type") === "MATCH" && (
+                                        <FormField
+                                            control={form.control}
+                                            name="field"
+                                            render={({ field }) => (
+                                                <FormItem>
+                                                    <FormLabel className="font-sans font-bold text-lg">
+                                                        Field
+                                                    </FormLabel>
+                                                    <FormControl>
+                                                        <RadioGroup onValueChange={field.onChange} defaultValue={field.value} className="flex p-3 shadow-md rounded-md space-x-4">
+                                                            <FormItem className="flex items-center space-x-3 space-y-0">
+                                                                <FormControl>
+                                                                    <RadioGroupItem value="GF" />
+                                                                </FormControl>
+                                                                <FormLabel>
+                                                                    GF
+                                                                </FormLabel>
+                                                            </FormItem>
+                                                            <FormItem className="flex items-center space-x-3 space-y-0">
+                                                                <FormControl>
+                                                                    <RadioGroupItem value="KF" />
+                                                                </FormControl>
+                                                                <FormLabel>
+                                                                    KF
+                                                                </FormLabel>
+                                                            </FormItem>
+                                                        </RadioGroup>
+                                                    </FormControl>
+                                                    <FormDescription>
+                                                        Field size?
+                                                    </FormDescription>
+                                                    <FormMessage />
+                                                </FormItem>
+                                            )}
+                                        />
                                     )}
-                                />
+                                </div>
                                 <div className="flex items-center justify-between">
                                     <FormField
                                         control={form.control}
