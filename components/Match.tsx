@@ -33,13 +33,24 @@ const Match: React.FC<MatchProps> = ({
                 </div>
             )}
             <div className="flex justify-between items-center mx-4 mb-1">
-                <h1 className="font-sans font-bold text-lg flex-grow text-right pr-2">
-                    {match.homeTeam}
-                </h1>
-                <Minus className="" size={24} />
-                <h1 className="font-sans font-bold text-lg flex-grow text-left pl-2">
-                    {match.awayTeam}
-                </h1>
+                <div className="flex items-center space-x-2">
+                    {match.field === "GF" ? (
+                        <p className="font-bold text-xl font-sans">
+                            GF
+                        </p>
+                    ) : (
+                        <p className="font-bold text-xl font-sans">
+                            KF
+                        </p>
+                    )}
+                    <h1 className="font-sans font-bold text-lg flex-grow text-right pr-2">
+                        {match.homeTeam}
+                    </h1>
+                    <Minus size={24} />
+                    <h1 className="font-sans font-bold text-lg flex-grow text-left pl-2">
+                        {match.awayTeam}
+                    </h1>
+                </div>
             </div>
 
             <div className="flex justify-between items-center mx-4 mb-2">

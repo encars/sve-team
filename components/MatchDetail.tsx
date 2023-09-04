@@ -2,7 +2,7 @@
 
 import { Match, User } from "@prisma/client";
 import { format } from "date-fns";
-import { CalendarDays, Check, MapPin, StickyNote, Timer, X } from "lucide-react";
+import { CalendarDays, Check, MapPin, StickyNote, Sword, Timer, X } from "lucide-react";
 import { notFound, useRouter } from "next/navigation";
 import { GiWhistle } from "react-icons/gi";
 import { Button } from "./ui/button";
@@ -131,8 +131,11 @@ const MatchDetail: React.FC<MatchDetailProps> = ({
                             <CalendarDays className="w-8 h-8" />
                             {format(new Date(match.date), 'dd.MM.yy')}
                         </h3>
+                        <p className="font-bold font-sans text-xl">
+                            {match.field}
+                        </p>
                         <h3 className="flex items-center gap-2 font-sans font-semibold">
-                            {format(new Date(match.date), 'HH:mm')}
+                            {match.time}
                             <Timer className="w-8 h-8" />
                         </h3>
                     </div>
