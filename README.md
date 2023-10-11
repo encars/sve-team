@@ -1,34 +1,20 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# SVE Team Management
 
-## Getting Started
+SVE Team Management is a Next.js application designed to facilitate the management of sports teams (primarily floorball), providing a structured platform to handle events, players, practices, and matches, ensuring smooth operation and communication within the team.
 
-First, run the development server:
+## Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+- **Event Management**: Create, update, and manage various events, including matches and practices.
+- **Player Management**: Handle player data, including their participation in events and other relevant details.
+- **User Authentication**: Manage user accounts, ensuring secure access to the platform.
+- **Match Details**: View and manage details related to matches, including player participation.
+- **Practice Details**: Handle details related to practice sessions, including attendance and notes.
+- **Dashboard**: A user-friendly dashboard to provide an overview and quick access to various functionalities.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Technology Stack
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- **Next.js**: Utilized for building the frontend and backend, providing a seamless user experience and development environment.
+- **Prisma**: Used for data modeling and interaction with the database, ensuring structured and reliable data management.
+- **React Hook Form**: Employed for managing forms and user inputs across the application.
+- **Zod**: Utilized for schema building and form validation, ensuring data integrity.
+- **Tailwind CSS**: Adopted for styling the application, providing a clean and responsive user interface.
