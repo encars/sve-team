@@ -1,17 +1,8 @@
-import { redirect } from "next/navigation";
-
-import getCurrentUser from "@/actions/getCurrentUser";
 import DashboardCard from "@/components/DashboardCard";
 import Welcome from "@/components/Welcome";
 import Footer from "@/components/Footer";
 
 const DashboardPage = async () => {
-    const currentUser = await getCurrentUser();
-
-    if (!currentUser) {
-        redirect("/");
-    }
-    
     return (
         <main className="pt-14 h-screen bg-primary overflow-y-auto">
             <Welcome />

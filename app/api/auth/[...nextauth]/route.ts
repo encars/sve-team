@@ -1,11 +1,9 @@
 import prisma from "@/lib/prisma";
-import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import NextAuth, { AuthOptions } from "next-auth";
+import NextAuth, { type NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcrypt";
 
-export const authOptions: AuthOptions = {
-    adapter: PrismaAdapter(prisma),
+export const authOptions: NextAuthOptions = {
     session: {
         strategy: "jwt",
     },
@@ -18,17 +16,17 @@ export const authOptions: AuthOptions = {
             },
             async authorize(credentials) {
                 if (!credentials?.username || !credentials?.password) {
-                    throw new Error("Invalid credentials");
+                    return null;
                 }
 
                 const user = await prisma.user.findUnique({
                     where: {
-                        name: credentials.username
+                        name: credentials.username,
                     },
                 });
 
                 if (!user || !user?.hashedPassword) {
-                    throw new Error("Invalid credentials");
+                    return null;
                 }
 
                 const isValid = await bcrypt.compare(
@@ -44,8 +42,29 @@ export const authOptions: AuthOptions = {
             }
         })
     ],
-    debug: process.env.NODE_ENV === "development",
     secret: process.env.NEXTAUTH_SECRET,
+    debug: process.env.NODE_ENV === "development",
+    callbacks: {
+        session: ({ session, token }) => {
+            return {
+                ...session,
+                user: {
+                    ...session.user,
+                    id: token.id,
+                }
+            }
+        },
+        jwt: ({ token, user }) => {
+            if (user) {
+                const u = user as unknown as any;
+                return {
+                    ...token,
+                    id: u.id,
+                }
+            }
+            return token;
+        }
+    }
 }
 
 const handler = NextAuth(authOptions);

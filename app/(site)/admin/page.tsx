@@ -2,15 +2,7 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 import { ArrowRight, Calendar, Users2 } from "lucide-react";
 
-import getCurrentUser from "@/actions/getCurrentUser";
-
 const AdminPage = async () => {
-    const currentUser = await getCurrentUser();
-
-    if (!currentUser || currentUser.role !== "COACH") {
-        redirect("/");
-    }
-
     return (
         <main className="pt-14 h-screen bg-primary overflow-y-auto flex flex-col">
             <div className="flex flex-col space-y-2 p-4 text-center">

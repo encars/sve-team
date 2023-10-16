@@ -1,12 +1,12 @@
-import getCurrentUser from "@/actions/getCurrentUser";
+import getUser from "@/actions/getUser";
 import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
     try {
-        const currentUser = await getCurrentUser();
+        const user = await getUser();
 
-        if (!currentUser) {
+        if (!user) {
             return new NextResponse("Unauthorized", { status: 401 });
         }
 
@@ -23,7 +23,7 @@ export async function POST(req: Request) {
 
         const updatedUser = await prisma.user.update({
             where: {
-                id: currentUser.id,
+                id: user.id,
             },
             data: {
                 displayName,

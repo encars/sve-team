@@ -1,15 +1,7 @@
-import getCurrentUser from "@/actions/getCurrentUser";
 import getRoster from "@/actions/getRoster";
 import FullRoster from "@/components/FullRoster";
-import { redirect } from "next/navigation";
 
 const RosterPage = async () => {
-    const currentUser = await getCurrentUser();
-
-    if (!currentUser) {
-        redirect("/");
-    };
-
     const roster = await getRoster();
 
     return (

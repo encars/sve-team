@@ -9,15 +9,15 @@ import { signOut } from "next-auth/react";
 import { User } from "@prisma/client";
 
 interface NavbarProps {
-    currentUser: User | null;
+    user: User;
 }
 
 const Navbar: React.FC<NavbarProps> = ({
-    currentUser,
+    user,
 }) => {
     return (
         <nav className="fixed top-0 right-0 z-10 w-full bg-primary text-primary-foreground flex items-center justify-between p-2 border-b border-muted-foreground">
-            <Link href={currentUser ? "/dashboard" : "/"} className="flex items-center space-x-2 ml-2">
+            <Link href={user ? "/dashboard" : "/"} className="flex items-center space-x-2 ml-2">
                 <Image src="/navbarLogo.png" alt="Logo" height={32} width={32} />
                 <p className="font-sans font-bold text-lg text-sveYellow">
                     SVE
@@ -27,7 +27,7 @@ const Navbar: React.FC<NavbarProps> = ({
                 </span>
             </Link>
 
-            {currentUser && (
+            {user && (
                 <Menubar className="bg-primary border-none">
                     <MenubarMenu>
                         <MenubarTrigger>
@@ -66,7 +66,7 @@ const Navbar: React.FC<NavbarProps> = ({
                                 </Link>
                             </MenubarItem>
                             <MenubarSeparator className="bg-muted-foreground" />
-                            {currentUser.role === "COACH" && (
+                            {user.role === "COACH" && (
                                 <>
                                     <MenubarItem>
                                         <Link className="w-full" href="/admin">

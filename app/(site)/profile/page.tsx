@@ -1,17 +1,12 @@
-import getCurrentUser from "@/actions/getCurrentUser";
+import getUser from "@/actions/getUser";
 import UserProfile from "@/components/UserProfile";
-import { redirect } from "next/navigation";
 
 export default async function Profile() {
-    const currentUser = await getCurrentUser();
-
-    if (!currentUser) {
-        redirect("/");
-    };
+    const user = await getUser();
 
     return (
         <main className="pt-16 h-screen bg-primary p-2 overflow-y-hidden">
-            <UserProfile currentUser={currentUser} />
+            <UserProfile currentUser={user} />
         </main>
     );
 }

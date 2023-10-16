@@ -2,16 +2,8 @@ import { Match } from "@prisma/client";
 
 import getAllMatches from "@/actions/getAllMatches";
 import AllMatches from "@/components/AllMatches";
-import { redirect } from "next/navigation";
-import getCurrentUser from "@/actions/getCurrentUser";
 
 const AllMatchesPage = async () => {
-    const currentUser = await getCurrentUser();
-
-    if (!currentUser) {
-        redirect("/");
-    };
-
     const matches: Match[] = await getAllMatches();
 
     return (

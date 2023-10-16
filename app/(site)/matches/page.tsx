@@ -5,16 +5,8 @@ import Link from "next/link";
 import { buttonVariants } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
-import getCurrentUser from "@/actions/getCurrentUser";
-import { redirect } from "next/navigation";
 
 const MatchesPage = async () => {
-    const currentUser = await getCurrentUser();
-    
-    if (!currentUser) {
-        redirect("/");
-    };
-
     const matches: Match[] = await getAllMatches(2);
 
     return (

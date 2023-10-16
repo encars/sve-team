@@ -1,5 +1,8 @@
 import Navbar from '@/components/Navbar';
-import getCurrentUser from '@/actions/getCurrentUser';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '../api/auth/[...nextauth]/route';
+import { redirect } from 'next/navigation';
+import getUser from '@/actions/getUser';
 
 export const metadata = {
 	title: 'SVE - Floorball',
@@ -11,11 +14,15 @@ export default async function RootLayout({
 }: {
 	children: React.ReactNode
 }) {
-	const currentUser = await getCurrentUser();
+	const user = await getUser();
+
+	if (!user) {
+		return redirect("/");
+	}
 
 	return (
 		<>
-			<Navbar currentUser={currentUser} />
+			<Navbar user={user!} />
 			{children}
 		</>
 	)

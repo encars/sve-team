@@ -1,14 +1,6 @@
-import getCurrentUser from "@/actions/getCurrentUser";
 import EditEventForm from "@/components/EditEventForm";
-import { redirect } from "next/navigation";
 
 const EventPage = async ({ params }: { params: { id: string } }) => {
-    const currentUser = await  getCurrentUser();
-
-    if (!currentUser || currentUser.role !== "COACH") {
-        redirect("/");
-    };
-    
     return (
         <main className="pt-16 h-screen bg-primary overflow-y-auto flex flex-col">
             <div className="flex flex-col space-y-2 p-4 text-center">

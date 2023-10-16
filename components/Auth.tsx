@@ -28,7 +28,7 @@ const Auth = () => {
             })
             return;
         }
-
+        
         setIsLoading(true);
 
         signIn("credentials", {
@@ -52,7 +52,6 @@ const Auth = () => {
                     variant: "default",
                 });
                 router.push("/dashboard");
-                router.refresh();
             }
         })
         .finally(() => setIsLoading(false));

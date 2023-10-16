@@ -1,11 +1,13 @@
-import getCurrentUser from "@/actions/getCurrentUser";
 import Auth from "@/components/Auth";
+import { getServerSession } from "next-auth";
+import { authOptions } from "./api/auth/[...nextauth]/route";
 import { redirect } from "next/navigation";
 
 const HomePage = async () => {
-	const currentUser = await getCurrentUser();
+	const session = await getServerSession(authOptions);
 
-	if (currentUser) {
+	if (session) {
+		console.log(session);
 		redirect("/dashboard");
 	}
 	
