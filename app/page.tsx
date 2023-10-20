@@ -7,7 +7,6 @@ const HomePage = async () => {
 	const session = await getServerSession(authOptions);
 
 	if (session) {
-		console.log(session);
 		redirect("/dashboard");
 	}
 	
