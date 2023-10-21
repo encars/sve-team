@@ -140,7 +140,7 @@ const MatchDetail: React.FC<MatchDetailProps> = ({
                         </h3>
                     </div>
 
-                    <div className="flex items-center justify-between">
+                    <div className="flex flex-col space-y-6">
                         <a
                             href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(match.location)}`}
                             target="_blank"
@@ -151,10 +151,10 @@ const MatchDetail: React.FC<MatchDetailProps> = ({
                         </a>
                         {match.needRef && (
                             <div className="flex items-center gap-2">
+                                <GiWhistle className="w-8 h-8" />
                                 <p className="font-sans font-semibold">
                                     Refs needed!
                                 </p>
-                                <GiWhistle className="w-8 h-8" />
                             </div>
                         )}
                     </div>
