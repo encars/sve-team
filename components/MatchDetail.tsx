@@ -2,7 +2,7 @@
 
 import { Match, User } from "@prisma/client";
 import { format } from "date-fns";
-import { CalendarDays, Check, MapPin, StickyNote, Sword, Timer, X } from "lucide-react";
+import { CalendarDays, Check, MapPin, Timer, X } from "lucide-react";
 import { notFound, useRouter } from "next/navigation";
 import { GiWhistle } from "react-icons/gi";
 import { Button } from "./ui/button";
