@@ -16,7 +16,7 @@ const PlayerList: React.FC<PlayerListProps> = ({
     return (
         <Accordion type="single" collapsible className="w-full px-4 shadow-md rounded-md bg-sveYellow">
             <AccordionItem value="playerlist">
-                <AccordionTrigger className="font-sans font-semibold">
+                <AccordionTrigger className="font-semibold">
                     <div className="flex items-center gap-4">
                         <Users className="h-6 w-6" />
                         {heading}

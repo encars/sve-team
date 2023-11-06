@@ -42,7 +42,7 @@ const DashboardCard: React.FC<DashboardCardProps> = ({
                 {cardIcons[type]}
             </div>
             <div className="flex flex-col">
-                <h2 className="font-sans text-lg font-bold">
+                <h2 className="text-lg font-bold">
                     {cardTitles[type]}
                 </h2>
                 <p className="font-mono">

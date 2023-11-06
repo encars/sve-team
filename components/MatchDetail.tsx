@@ -115,11 +115,11 @@ const MatchDetail: React.FC<MatchDetailProps> = ({
     return (
         <div className="flex flex-col space-y-2 pt-4 text-center">
             <div className="flex flex-col items-center mx-4 mb-5 text-primary-foreground">
-                <h1 className="font-sans font-bold text-2xl">
+                <h1 className="font-bold text-2xl">
                     {match.homeTeam}
                 </h1>
                 vs
-                <h2 className="font-sans font-bold text-2xl">
+                <h2 className="font-bold text-2xl">
                     {match.awayTeam}
                 </h2>
             </div>
@@ -127,14 +127,14 @@ const MatchDetail: React.FC<MatchDetailProps> = ({
             <section className="flex flex-col space-y-4 p-4 text-primary bg-sveYellowDarker">
                 <div className="flex flex-col space-y-6 p-4 bg-sveYellow rounded-md shadow-md">
                     <div className="flex items-center justify-between">
-                        <h3 className="flex items-center gap-2 font-sans font-semibold">
+                        <h3 className="flex items-center gap-2 font-semibold">
                             <CalendarDays className="w-8 h-8" />
                             {format(new Date(match.date), 'dd.MM.yy')}
                         </h3>
-                        <p className="font-bold font-sans text-xl">
+                        <p className="font-bold text-xl">
                             {match.field}
                         </p>
-                        <h3 className="flex items-center gap-2 font-sans font-semibold">
+                        <h3 className="flex items-center gap-2 font-semibold">
                             {match.time}
                             <Timer className="w-8 h-8" />
                         </h3>
@@ -145,14 +145,14 @@ const MatchDetail: React.FC<MatchDetailProps> = ({
                             href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(match.location)}`}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex items-center gap-2 font-sans font-semibold truncate">
+                            className="flex items-center gap-2 font-semibold truncate">
                             <MapPin className="w-8 h-8" />
                             {match.location}
                         </a>
                         {match.needRef && (
                             <div className="flex items-center gap-2">
                                 <GiWhistle className="w-8 h-8" />
-                                <p className="font-sans font-semibold">
+                                <p className="font-semibold">
                                     Refs needed!
                                 </p>
                             </div>

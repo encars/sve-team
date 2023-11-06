@@ -34,11 +34,11 @@ const Match: React.FC<MatchProps> = ({
             )}
             <div className="flex justify-between items-center mx-4 mb-1">
                 <div className="flex items-center space-x-2">
-                    <h1 className="font-sans font-bold text-lg flex-grow pr-2">
+                    <h1 className="font-bold text-lg flex-grow pr-2">
                         {match.homeTeam}
                     </h1>
                     <Minus size={24} />
-                    <h1 className="font-sans font-bold text-lg flex-grow pl-2">
+                    <h1 className="font-bold text-lg flex-grow pl-2">
                         {match.awayTeam}
                     </h1>
                 </div>

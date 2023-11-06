@@ -1,9 +1,7 @@
 import './globals.css';
-import { Roboto } from 'next/font/google';
 import { Toaster } from "@/components/ui/toaster";
 import { Providers } from '@/providers/Providers';
-
-const roboto = Roboto({ subsets: ['latin'], weight: "400" })
+import { GeistSans } from 'geist/font';
 
 export const metadata = {
 	title: 'SVE',
@@ -17,7 +15,7 @@ export default function RootLayout({
 }) {
 	return (
 		<html lang="en">
-			<body className={roboto.className}>
+			<body className={GeistSans.className}>
 				<Providers>
 					{children}
 					<Toaster />

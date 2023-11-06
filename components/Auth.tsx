@@ -64,7 +64,7 @@ const Auth = () => {
                     <h1 className="font-serif text-primary-foreground text-3xl text-center">
                         Members only
                     </h1>
-                    <small className="font-sans text-muted-foreground">
+                    <small className="text-muted-foreground">
                         Please login to continue
                     </small>
                 </div>

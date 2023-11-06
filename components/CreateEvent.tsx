@@ -100,7 +100,7 @@ const CreateEvent = () => {
                 <Drawer.Overlay className="fixed inset-0 bg-black/40" />
                 <Drawer.Content className="bg-sveYellowDarker flex flex-col max-h-[85vh] rounded-t-[10px] mt-24 fixed bottom-0 left-0 right-0">
                     <div className="max-w-md w-full mx-auto flex flex-col overflow-auto p-4 bg-sveYellowDarker rounded-t-[10px] flex-1">
-                        <Drawer.Title className="flex items-center justify-between font-sans font-bold text-2xl mb-4">
+                        <Drawer.Title className="flex items-center justify-between font-bold text-2xl mb-4">
                             <div className="flex items-center">
                                 <CalendarIcon className="w-8 h-8 mr-2" />
                                 New Event
@@ -116,7 +116,7 @@ const CreateEvent = () => {
                                         name="type"
                                         render={({ field }) => (
                                             <FormItem>
-                                                <FormLabel className="font-sans font-bold text-lg">
+                                                <FormLabel className="font-bold text-lg">
                                                     Type
                                                 </FormLabel>
                                                 <Select onValueChange={field.onChange} defaultValue={field.value}>
@@ -147,7 +147,7 @@ const CreateEvent = () => {
                                             name="field"
                                             render={({ field }) => (
                                                 <FormItem>
-                                                    <FormLabel className="font-sans font-bold text-lg">
+                                                    <FormLabel className="font-bold text-lg">
                                                         Field
                                                     </FormLabel>
                                                     <FormControl>
@@ -185,7 +185,7 @@ const CreateEvent = () => {
                                         name="date"
                                         render={({ field }) => (
                                             <FormItem>
-                                                <FormLabel className="font-sans font-bold">
+                                                <FormLabel className="font-bold">
                                                     Date
                                                 </FormLabel>
                                                 <Popover>
@@ -216,7 +216,7 @@ const CreateEvent = () => {
                                         name="time"
                                         render={({ field }) => (
                                             <FormItem>
-                                                <FormLabel className="font-sans font-bold">
+                                                <FormLabel className="font-bold">
                                                     Time
                                                 </FormLabel>
                                                 <FormControl>
@@ -235,7 +235,7 @@ const CreateEvent = () => {
                                     name="location"
                                     render={({ field }) => (
                                         <FormItem>
-                                            <FormLabel className="font-sans font-bold">
+                                            <FormLabel className="font-bold">
                                                 Location
                                             </FormLabel>
                                             <FormControl>
@@ -259,7 +259,7 @@ const CreateEvent = () => {
                                                 name="homeTeam"
                                                 render={({ field }) => (
                                                     <FormItem>
-                                                        <FormLabel className="font-sans font-bold">
+                                                        <FormLabel className="font-bold">
                                                             Home Team
                                                         </FormLabel>
                                                         <FormControl>
@@ -280,7 +280,7 @@ const CreateEvent = () => {
                                                 name="awayTeam"
                                                 render={({ field }) => (
                                                     <FormItem>
-                                                        <FormLabel className="font-sans font-bold">
+                                                        <FormLabel className="font-bold">
                                                             Away Team
                                                         </FormLabel>
                                                         <FormControl>
@@ -306,7 +306,7 @@ const CreateEvent = () => {
                                                         <Checkbox checked={field.value} onCheckedChange={field.onChange} />
                                                     </FormControl>
                                                     <div className="space-y-1 leading-none">
-                                                        <FormLabel className="font-sans font-bold">
+                                                        <FormLabel className="font-bold">
                                                             Referees Needed?
                                                         </FormLabel>
                                                         <FormDescription>
@@ -323,7 +323,7 @@ const CreateEvent = () => {
                                     name="notes"
                                     render={({ field }) => (
                                         <FormItem>
-                                            <FormLabel className="font-sans font-bold">
+                                            <FormLabel className="font-bold">
                                                 Notes
                                             </FormLabel>
                                             <FormControl>

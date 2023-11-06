@@ -7,7 +7,7 @@ const Welcome = () => {
                 <h1 className="font-serif font-bold text-5xl text-sveYellow">
                     SVE
                 </h1>
-                <h2 className="font-sans font-bold text-xl text-sveBlue">
+                <h2 className="font-bold text-xl text-sveBlue">
                     Floorball
                 </h2>
             </div>

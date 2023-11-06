@@ -91,7 +91,7 @@ const CreatePlayer = () => {
                 <Drawer.Overlay className="fixed inset-0 bg-black/40" />
                 <Drawer.Content className="bg-sveYellowDarker flex flex-col max-h-[85vh] rounded-t-[10px] mt-24 fixed bottom-0 left-0 right-0">
                     <div className="max-w-md w-full mx-auto flex flex-col overflow-auto p-4 bg-sveYellowDarker rounded-t-[10px] flex-1">
-                        <Drawer.Title className="flex items-center justify-between font-sans font-bold text-2xl mb-4">
+                        <Drawer.Title className="flex items-center justify-between font-bold text-2xl mb-4">
                             <div className="flex items-center">
                                 <User className="w-8 h-8 mr-2" />
                                 New Player
@@ -106,7 +106,7 @@ const CreatePlayer = () => {
                                     name="name"
                                     render={({ field }) => (
                                         <FormItem>
-                                            <FormLabel className="font-sans font-bold text-lg">
+                                            <FormLabel className="font-bold text-lg">
                                                 Name
                                             </FormLabel>
                                             <FormControl>
@@ -125,7 +125,7 @@ const CreatePlayer = () => {
                                         name="displayName"
                                         render={({ field }) => (
                                             <FormItem>
-                                                <FormLabel className="font-sans font-bold text-lg">
+                                                <FormLabel className="font-bold text-lg">
                                                     Display Name
                                                 </FormLabel>
                                                 <FormControl>
@@ -143,7 +143,7 @@ const CreatePlayer = () => {
                                         name="number"
                                         render={({ field }) => (
                                             <FormItem>
-                                                <FormLabel className="font-sans font-bold text-lg">
+                                                <FormLabel className="font-bold text-lg">
                                                     Number
                                                 </FormLabel>
                                                 <FormControl>
@@ -163,7 +163,7 @@ const CreatePlayer = () => {
                                         name="password"
                                         render={({ field }) => (
                                             <FormItem>
-                                                <FormLabel className="font-sans font-bold text-lg">
+                                                <FormLabel className="font-bold text-lg">
                                                     Password
                                                 </FormLabel>
                                                 <FormControl>
@@ -181,7 +181,7 @@ const CreatePlayer = () => {
                                         name="stick"
                                         render={({ field }) => (
                                             <FormItem>
-                                                <FormLabel className="font-sans font-bold text-lg">
+                                                <FormLabel className="font-bold text-lg">
                                                     Stick
                                                 </FormLabel>
                                                 <FormControl>
@@ -210,7 +210,7 @@ const CreatePlayer = () => {
                                         name="role"
                                         render={({ field }) => (
                                             <FormItem>
-                                                <FormLabel className="font-sans font-bold text-lg">
+                                                <FormLabel className="font-bold text-lg">
                                                     Role
                                                 </FormLabel>
                                                 <FormControl>
@@ -237,7 +237,7 @@ const CreatePlayer = () => {
                                         name="position"
                                         render={({ field }) => (
                                             <FormItem>
-                                                <FormLabel className="font-sans font-bold text-lg">
+                                                <FormLabel className="font-bold text-lg">
                                                     Position
                                                 </FormLabel>
                                                 <Select onValueChange={field.onChange} defaultValue={field.value}>
@@ -278,7 +278,7 @@ const CreatePlayer = () => {
                                                 <Checkbox checked={field.value} onCheckedChange={field.onChange} />
                                             </FormControl>
                                             <div className="space-y-1 leading-none">
-                                                <FormLabel className="font-sans font-bold">
+                                                <FormLabel className="font-bold">
                                                     Referee?
                                                 </FormLabel>
                                                 <FormDescription>
@@ -293,7 +293,7 @@ const CreatePlayer = () => {
                                     name="license"
                                     render={({ field }) => (
                                         <FormItem>
-                                            <FormLabel className="font-sans font-bold text-lg">
+                                            <FormLabel className="font-bold text-lg">
                                                 License
                                             </FormLabel>
                                             <FormControl>

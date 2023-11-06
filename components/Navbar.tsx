@@ -19,10 +19,10 @@ const Navbar: React.FC<NavbarProps> = ({
         <nav className="fixed top-0 right-0 z-10 w-full bg-primary text-primary-foreground flex items-center justify-between p-2 border-b border-muted-foreground">
             <Link href={user ? "/dashboard" : "/"} className="flex items-center space-x-2 ml-2">
                 <Image src="/navbarLogo.svg" alt="Logo" height={32} width={32} />
-                <p className="font-sans font-bold text-lg text-sveYellow">
+                <p className="font-bold text-lg text-sveYellow">
                     SVE
                 </p>
-                <span className="font-sans font-bold text-lg text-sveBlue">
+                <span className="font-bold text-lg text-sveBlue">
                     Floorball
                 </span>
             </Link>
@@ -33,7 +33,7 @@ const Navbar: React.FC<NavbarProps> = ({
                         <MenubarTrigger>
                             <AlignJustify className="w-6 h-6" />
                         </MenubarTrigger>
-                        <MenubarContent className="bg-blue-950 shadow-md mr-2 mt-2 foreground font-sans text-primary-foreground">
+                        <MenubarContent className="bg-blue-950 shadow-md mr-2 mt-2 text-primary-foreground">
                             <MenubarItem>
                                 <Link className="w-full" href="/dashboard">
                                     Dashboard

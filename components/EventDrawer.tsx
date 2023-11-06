@@ -89,7 +89,7 @@ const EventDrawer: React.FC<EventDrawerProps> = ({
                 <Drawer.Overlay className="fixed inset-0 bg-black/40" />
                 <Drawer.Content className="bg-sveYellowDarker flex flex-col max-h-[85vh] rounded-t-[10px] mt-24 fixed bottom-0 left-0 right-0">
                     <div className="max-w-md w-full mx-auto flex flex-col overflow-auto p-4 bg-sveYellowDarker rounded-t-[10px] flex-1">
-                        <Drawer.Title className="flex items-center justify-between font-sans font-bold text-2xl mb-4">
+                        <Drawer.Title className="flex items-center justify-between font-bold text-2xl mb-4">
                             <div className="flex items-center">
                                 <Edit className="w-6 h-6 mr-2" />
                                 Update an Event
@@ -99,14 +99,14 @@ const EventDrawer: React.FC<EventDrawerProps> = ({
 
                         <div className="flex flex-col space-y-4 text-primary mb-4">
                             <div className="flex items-center justify-between space-x-4">
-                                <h3 className="text-lg font-sans font-semibold">
+                                <h3 className="text-lg font-semibold">
                                     Search
                                 </h3>
                                 <Input type="text" value={searchQuery} onChange={handleSearchChange} placeholder="for a team or a location...." />
                             </div>
 
                             <div className="flex items-center justify-between">
-                                <h3 className="text-lg font-sans font-semibold">
+                                <h3 className="text-lg font-semibold">
                                     or filter by
                                 </h3>
 
@@ -138,7 +138,7 @@ const EventDrawer: React.FC<EventDrawerProps> = ({
                         </Button>
 
                         {/* Display Results */}
-                        <div className="flex flex-col space-y-2 p-4 rounded-md shadow-md bg-sveYellow font-sans">
+                        <div className="flex flex-col space-y-2 p-4 rounded-md shadow-md bg-sveYellow">
                             {matches.map((match) => (
                                 <Link key={match.id} href={`/admin/events/${match.id}`} className="flex items-center justify-between p-2 rounded-md border-2 border-sveYellowDarker transition duration-300 hover:scale-105">
                                     <div className="flex items-center font-semibold">
