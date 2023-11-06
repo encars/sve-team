@@ -1,7 +1,7 @@
 "use client";
 
 import { Practice, User } from "@prisma/client";
-import { CalendarDays, ChevronLeft, MapPin, Timer } from "lucide-react";
+import { CalendarDays, Check, ChevronLeft, MapPin, Timer, X } from "lucide-react";
 import { notFound, useRouter } from "next/navigation";
 import { Button } from "./ui/button";
 import { useState } from "react";
@@ -152,14 +152,18 @@ const PracticeDetail: React.FC<PracticeDetailProps> = ({
                 <PlayerList players={players} heading="View Lineup" />
             </div>
 
-            <div className="flex space-x-1 w-full h-20">
-                <Button onClick={handleAccept} disabled={isLoading} className="h-full w-full bg-green-600 hover:bg-green-700">
-                    Join practice
-                </Button>
-                <Button onClick={handleDecline} disabled={isLoading} className="h-full w-full bg-red-600 hover:bg-red-700">
-                    Decline practice
-                </Button>
-            </div>
+            <div className="flex flex-col space-y-4">
+                    <div className="flex items-center justify-between space-x-2">
+                        <Button onClick={handleAccept} disabled={isLoading} className="w-full shadow-md bg-green-600 hover:bg-green-700">
+                            <Check className="w-6 h-6 mr-2" />
+                            Accept
+                        </Button>
+                        <Button onClick={handleDecline} disabled={isLoading} className="w-full shadow-md bg-red-600 hover:bg-red-700">
+                            <X className="w-6 h-6 mr-2" />
+                            Decline
+                        </Button>
+                    </div>
+                </div>
         </div>
     );
 };

@@ -309,9 +309,6 @@ const CreateEvent = () => {
                                                         <FormLabel className="font-bold">
                                                             Referees Needed?
                                                         </FormLabel>
-                                                        <FormDescription>
-                                                            Do we need referees?
-                                                        </FormDescription>
                                                     </div>
                                                 </FormItem>
                                             )}
@@ -333,9 +330,6 @@ const CreateEvent = () => {
                                                     {...field}
                                                 />
                                             </FormControl>
-                                            <FormDescription>
-                                                Anything else?
-                                            </FormDescription>
                                             <FormMessage />
                                         </FormItem>
                                     )}

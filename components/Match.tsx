@@ -33,12 +33,12 @@ const Match: React.FC<MatchProps> = ({
                 </div>
             )}
             <div className="flex justify-between items-center mx-4 mb-1">
-                <div className="flex items-center space-x-2">
-                    <h1 className="font-bold text-lg flex-grow pr-2">
+                <div className="w-full flex items-center space-x-2">
+                    <h1 className="font-bold text-lg pr-2 truncate">
                         {match.homeTeam}
                     </h1>
                     <Minus size={24} />
-                    <h1 className="font-bold text-lg flex-grow pl-2">
+                    <h1 className="font-bold text-lg pl-2 truncate">
                         {match.awayTeam}
                     </h1>
                 </div>
@@ -56,12 +56,12 @@ const Match: React.FC<MatchProps> = ({
             </div>
 
             <div className="flex justify-between items-center mx-4">
-                <small className="flex items-center gap-2  font-mono">
+                <small className="flex items-center gap-2 font-mono truncate">
                     <MapPin size={18} />
                     {match.location}
                 </small>
 
-                <small className="flex items-center gap-2  font-mono">
+                <small className="flex items-center gap-2 font-mono">
                     {match.userIds.length}
                     <IoIosPeople size={18} />
                 </small>

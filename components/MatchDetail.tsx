@@ -125,22 +125,18 @@ const MatchDetail: React.FC<MatchDetailProps> = ({
             </div>
 
             <section className="flex flex-col space-y-4 p-4 text-primary bg-sveYellowDarker">
-                <div className="flex flex-col space-y-6 p-4 bg-sveYellow rounded-md shadow-md">
-                    <div className="flex items-center justify-between">
+                    <div className="flex items-center justify-center space-x-8">
                         <h3 className="flex items-center gap-2 font-semibold">
                             <CalendarDays className="w-8 h-8" />
                             {format(new Date(match.date), 'dd.MM.yy')}
                         </h3>
-                        <p className="font-bold text-xl">
-                            {match.field}
-                        </p>
                         <h3 className="flex items-center gap-2 font-semibold">
                             {match.time}
                             <Timer className="w-8 h-8" />
                         </h3>
                     </div>
 
-                    <div className="flex flex-col space-y-6">
+                    <div className="flex flex-col items-center space-y-6">
                         <a
                             href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(match.location)}`}
                             target="_blank"
@@ -158,22 +154,20 @@ const MatchDetail: React.FC<MatchDetailProps> = ({
                             </div>
                         )}
                     </div>
-                </div>
 
-                <PlayerList players={players} heading="View Lineup" />
+                    <PlayerList players={players} heading="View Lineup" />
 
-                <Notes notes={match.notes} />
+                    <Notes notes={match.notes} />
 
                 <div className="flex flex-col space-y-4">
-                    <h3 className="text-center text-2xl font-serif font-bold">
-                        Are you in?
-                    </h3>
-                    <div className="flex items-center justify-between space-x-2 h-20">
-                        <Button onClick={handleAccept} disabled={isLoading} className="w-full h-full shadow-md bg-green-600 hover:bg-green-700">
-                            <Check className="w-8 h-8" />
+                    <div className="flex items-center justify-between space-x-2">
+                        <Button onClick={handleAccept} disabled={isLoading} className="w-full shadow-md bg-green-600 hover:bg-green-700">
+                            <Check className="w-6 h-6 mr-2" />
+                            Accept
                         </Button>
-                        <Button onClick={handleDecline} disabled={isLoading} className="w-full h-full shadow-md bg-red-600 hover:bg-red-700">
-                            <X className="w-8 h-8" />
+                        <Button onClick={handleDecline} disabled={isLoading} className="w-full shadow-md bg-red-600 hover:bg-red-700">
+                            <X className="w-6 h-6 mr-2" />
+                            Decline
                         </Button>
                     </div>
                 </div>
