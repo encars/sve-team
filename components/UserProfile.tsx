@@ -36,6 +36,7 @@ const UserProfile: React.FC<UserProfileProps> = ({
     const [isLoading, setIsLoading] = useState(false);
     const [displayName, setDisplayName] = useState(currentUser!.displayName);
     const [email, setEmail] = useState(currentUser!.email ? currentUser!.email : "No email set");
+    const [hasChanges, setHasChanges] = useState(false);
 
     if (!currentUser) {
         router.push("/");
@@ -43,8 +44,18 @@ const UserProfile: React.FC<UserProfileProps> = ({
             title: "You are not logged in",
             description: "You are not logged in, please log in to view this page",
             variant: "destructive"
-        })
-    }
+        });
+    };
+
+    const handleDisplayNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setDisplayName(e.target.value);
+        setHasChanges(true);
+    };
+
+    const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setEmail(e.target.value);
+        setHasChanges(true);
+    };
 
     const handleSave = async () => {
         setIsLoading(true);
@@ -58,7 +69,8 @@ const UserProfile: React.FC<UserProfileProps> = ({
                     title: "Profile updated",
                     description: "Your profile has been updated",
                     variant: "default"
-                })
+                });
+                setHasChanges(false);
             })
             .catch(() => {
                 toast({
@@ -112,7 +124,7 @@ const UserProfile: React.FC<UserProfileProps> = ({
                         name="displayName"
                         id="displayName"
                         value={displayName}
-                        onChange={(e) => setDisplayName(e.target.value)}
+                        onChange={handleDisplayNameChange}
                         className="text-muted-foreground border-muted-foreground"
                     />
                     <small className="text-muted-foreground">
@@ -129,7 +141,7 @@ const UserProfile: React.FC<UserProfileProps> = ({
                         name="email"
                         id="email"
                         value={email}
-                        onChange={(e) => setEmail(e.target.value)}
+                        onChange={handleEmailChange}
                         className="text-muted-foreground border-muted-foreground"
                     />
                     <small className="text-muted-foreground">
@@ -167,7 +179,7 @@ const UserProfile: React.FC<UserProfileProps> = ({
                 This is the role and position that will be displayed to other users. These can be changed by a coach.
             </small>
 
-            <Button onClick={() => handleSave()} variant="secondary" disabled={isLoading}>
+            <Button onClick={() => handleSave()} variant="secondary" disabled={isLoading || !hasChanges}>
                 Save changes
             </Button>
         </section>
