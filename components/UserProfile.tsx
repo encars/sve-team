@@ -3,7 +3,6 @@
 import { User } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import { toast } from "./ui/use-toast";
-import UserAvatar from "./UserAvatar";
 import { Label } from "./ui/label";
 import { Input } from "./ui/input";
 import { GiCheckedShield, GiGoalKeeper, GiSoccerBall, GiStrikingBalls, GiWhistle } from "react-icons/gi";
@@ -11,6 +10,10 @@ import { FaBullseye, FaQuestion } from "react-icons/fa";
 import { Button } from "./ui/button";
 import { useState } from "react";
 import axios from "axios";
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "./ui/form";
 
 interface UserProfileProps {
     currentUser: User | null;
@@ -29,160 +32,149 @@ const positionIcons = {
     NONE: <FaQuestion size={24} />,
 };
 
+const formSchema = z.object({
+    displayName: z.string().min(3).max(30),
+    email: z.string().email(),
+    password: z.string().min(8, "Password must be at least 8 characters long").max(30).optional(),
+});
+
 const UserProfile: React.FC<UserProfileProps> = ({
     currentUser,
 }) => {
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
-    const [displayName, setDisplayName] = useState(currentUser!.displayName);
-    const [email, setEmail] = useState(currentUser!.email ? currentUser!.email : "No email set");
-    const [hasChanges, setHasChanges] = useState(false);
 
-    if (!currentUser) {
-        router.push("/");
-        toast({
-            title: "You are not logged in",
-            description: "You are not logged in, please log in to view this page",
-            variant: "destructive"
-        });
-    };
+    const form = useForm<z.infer<typeof formSchema>>({
+        resolver: zodResolver(formSchema),
+        defaultValues: {
+            displayName: currentUser!.displayName,
+            email: currentUser!.email || "No email set",
+        },
+    });
 
-    const handleDisplayNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setDisplayName(e.target.value);
-        setHasChanges(true);
-    };
+    const onSubmit = async (values: z.infer<typeof formSchema>) => {
+        try {
+            setIsLoading(true);
 
-    const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setEmail(e.target.value);
-        setHasChanges(true);
-    };
+            const res = await axios.patch("/api/players/update", values);
 
-    const handleSave = async () => {
-        setIsLoading(true);
-
-        await axios.post("/api/players/update", {
-            displayName,
-            email,
-        })
-            .then(() => {
+            if (res.status === 200) {
                 toast({
-                    title: "Profile updated",
-                    description: "Your profile has been updated",
-                    variant: "default"
+                    title: "Success",
+                    description: "Your changes have been saved",
+                    variant: "success"
                 });
-                setHasChanges(false);
-            })
-            .catch(() => {
-                toast({
-                    title: "Error",
-                    description: "There was an error updating your profile",
-                    variant: "destructive"
-                })
-            })
-            .finally(() => {
-                setIsLoading(false);
                 router.refresh();
+            } else {
+                toast({
+                    title: "An error occurred",
+                    description: "An error occurred while trying to save your changes",
+                    variant: "destructive"
+                });
+            }
+        } catch (error) {
+            console.error(error);
+            toast({
+                title: "An error occurred",
+                description: "An error occurred while trying to save your changes",
+                variant: "destructive"
             });
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     return (
-        <section className="flex flex-col p-2">
-            <div className="flex flex-col items-center mb-4">
-                <UserAvatar user={currentUser!} />
-                <h1 className="text-primary-foreground text-xl">
-                    {currentUser!.displayName}
-                </h1>
-                <h3 className="text-muted-foreground text-base">
-                    {currentUser!.name}
-                </h3>
-            </div>
+        <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col space-y-4 p-4 text-primary bg-sveYellowDarker">
+                <FormField
+                    control={form.control}
+                    name="displayName"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>
+                                Display Name
+                            </FormLabel>
+                            <FormControl>
+                                <Input {...field} />
+                            </FormControl>
+                            <FormDescription>
+                                This is the name that will be displayed to other users
+                            </FormDescription>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+                <FormField
+                    control={form.control}
+                    name="email"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>
+                                Email
+                            </FormLabel>
+                            <FormControl>
+                                <Input {...field} />
+                            </FormControl>
+                            <FormDescription>
+                                This is the email that will be used to contact you
+                            </FormDescription>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+                <FormField
+                    control={form.control}
+                    name="password"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>
+                                Password
+                            </FormLabel>
+                            <FormControl>
+                                <Input placeholder="••••••••" type="password" {...field} />
+                            </FormControl>
+                            <FormDescription>
+                                This is the password that will be used to login to your account
+                            </FormDescription>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+                <div className="flex items-center justify-around shadow-md rounded-md p-4">
+                    <div className="flex flex-col">
+                        <Label htmlFor="roles" className="sr-only">
+                            Role
+                        </Label>
+                        <div className="flex items-center space-x-2">
+                            {roleIcons[currentUser!.role]}
+                            <span>
+                                {currentUser!.role}
+                            </span>
+                        </div>
+                    </div>
 
-            <div className="flex flex-col space-y-6 mb-8">
-                <div className="flex flex-col space-y-3">
-                    <Label htmlFor="name" className="text-primary-foreground">
-                        Username
-                    </Label>
-                    <Input
-                        type="text"
-                        name="name"
-                        id="name"
-                        value={currentUser!.name}
-                        disabled
-                        className="text-muted-foreground border-muted-foreground"
-                    />
-                    <small className="text-muted-foreground">
-                        This is your account name, it cannot be changed
-                    </small>
-                </div>
-
-                <div className="flex flex-col space-y-3">
-                    <Label htmlFor="displayName" className="text-primary-foreground">
-                        Display Name
-                    </Label>
-                    <Input
-                        type="text"
-                        name="displayName"
-                        id="displayName"
-                        value={displayName}
-                        onChange={handleDisplayNameChange}
-                        className="text-muted-foreground border-muted-foreground"
-                    />
-                    <small className="text-muted-foreground">
-                        This is the name that will be displayed to other users
-                    </small>
-                </div>
-
-                <div className="flex flex-col space-y-3">
-                    <Label htmlFor="email" className="text-primary-foreground">
-                        Email
-                    </Label>
-                    <Input
-                        type="email"
-                        name="email"
-                        id="email"
-                        value={email}
-                        onChange={handleEmailChange}
-                        className="text-muted-foreground border-muted-foreground"
-                    />
-                    <small className="text-muted-foreground">
-                        This is the email that will be used to contact you
-                    </small>
-                </div>
-            </div>
-
-            <div className="flex items-center justify-around border border-muted-foreground rounded-md p-4">
-                <div className="flex flex-col">
-                    <Label htmlFor="roles" className="text-primary-foreground sr-only">
-                        Role
-                    </Label>
-                    <div className="flex items-center space-x-2 text-primary-foreground">
-                        {roleIcons[currentUser!.role]}
-                        <span className="text-muted-foreground">
-                            {currentUser!.role}
-                        </span>
+                    <div className="flex flex-col">
+                        <Label htmlFor="positions" className="sr-only">
+                            Position
+                        </Label>
+                        <div className="flex items-center space-x-2">
+                            {positionIcons[currentUser!.position ? currentUser!.position : "NONE"]}
+                            <span>
+                                {currentUser!.position}
+                            </span>
+                        </div>
                     </div>
                 </div>
+                <small className="mt-3 mb-8">
+                    This is the role and position that will be displayed to other users. These can be changed by a coach.
+                </small>
 
-                <div className="flex flex-col">
-                    <Label htmlFor="positions" className="text-primary-foreground sr-only">
-                        Position
-                    </Label>
-                    <div className="flex items-center space-x-2 text-primary-foreground">
-                        {positionIcons[currentUser!.position ? currentUser!.position : "NONE"]}
-                        <span className="text-muted-foreground">
-                            {currentUser!.position}
-                        </span>
-                    </div>
-                </div>
-            </div>
-            <small className="text-muted-foreground mt-3 mb-8">
-                This is the role and position that will be displayed to other users. These can be changed by a coach.
-            </small>
-
-            <Button onClick={() => handleSave()} variant="secondary" disabled={isLoading || !hasChanges}>
-                Save changes
-            </Button>
-        </section>
+                <Button type="submit" disabled={isLoading}>
+                    Save changes
+                </Button>
+            </form>
+        </Form>
     );
 };
 

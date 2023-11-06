@@ -1,35 +1,43 @@
 import getUser from "@/actions/getUser";
 import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
+import bcrypt from "bcrypt";
 
-export async function POST(req: Request) {
+export async function PATCH (req: Request) {
     try {
         const user = await getUser();
+
+        const { displayName, email, password } = await req.json();
 
         if (!user) {
             return new NextResponse("Unauthorized", { status: 401 });
         }
 
-        const body = await req.json();
-        const { displayName, email } = body;
+        let updatedUser;
 
-        if (!displayName || typeof displayName !== "string") {
-            return new NextResponse("Invalid display name", { status: 400 });
+        if (!password) {
+            updatedUser = await prisma.user.update({
+                where: {
+                    id: user.id
+                },
+                data: {
+                    displayName,
+                    email
+                }
+            });
+        } else {
+            const hashedPassword = await bcrypt.hash(password, 12);
+            updatedUser = await prisma.user.update({
+                where: {
+                    id: user.id
+                },
+                data: {
+                    displayName,
+                    email,
+                    hashedPassword
+                }
+            });
         }
-
-        if (!email || typeof email !== "string") {
-            return new NextResponse("Invalid email", { status: 400 });
-        }
-
-        const updatedUser = await prisma.user.update({
-            where: {
-                id: user.id,
-            },
-            data: {
-                displayName,
-                email,
-            },
-        });
 
         return NextResponse.json(updatedUser, { status: 200 });
     } catch (error: any) {
