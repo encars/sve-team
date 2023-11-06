@@ -12,7 +12,7 @@ const UserAvatar: React.FC<UserAvatarProps> = ({
 }) => {
     return (
         <Avatar>
-            <AvatarImage src="/avatar.png" alt="Avatar" />
+            <AvatarImage src="/avatar.svg" alt="Avatar" />
             <AvatarFallback>
                 SVE
             </AvatarFallback>

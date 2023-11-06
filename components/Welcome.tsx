@@ -11,7 +11,7 @@ const Welcome = () => {
                     Floorball
                 </h2>
             </div>
-            <Image src="/welcomeLogo.png" alt="logo" width={256} height={256} />
+            <Image src="/welcomeLogo.svg" alt="logo" width={256} height={256} />
         </div>
     );
 };

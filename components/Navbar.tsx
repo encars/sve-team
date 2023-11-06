@@ -18,7 +18,7 @@ const Navbar: React.FC<NavbarProps> = ({
     return (
         <nav className="fixed top-0 right-0 z-10 w-full bg-primary text-primary-foreground flex items-center justify-between p-2 border-b border-muted-foreground">
             <Link href={user ? "/dashboard" : "/"} className="flex items-center space-x-2 ml-2">
-                <Image src="/navbarLogo.png" alt="Logo" height={32} width={32} />
+                <Image src="/navbarLogo.svg" alt="Logo" height={32} width={32} />
                 <p className="font-sans font-bold text-lg text-sveYellow">
                     SVE
                 </p>
