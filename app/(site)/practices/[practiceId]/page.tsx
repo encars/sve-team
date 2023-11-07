@@ -16,7 +16,7 @@ const PracticePage = async ({ params }: { params: { practiceId: string } }) => {
     }
 
     return (
-        <main className="pt-16 h-screen bg-primary p-2">
+        <main className="pt-14 h-screen bg-primary overflow-y-auto flex flex-col">
             <PracticeDetail practice={practice} players={players} currentUser={user!} />
         </main>
     )

@@ -11,6 +11,7 @@ import { useState } from "react";
 import { toast } from "./ui/use-toast";
 import axios from "axios";
 import Notes from "./Notes";
+import { TbMapPinShare } from "react-icons/tb";
 
 export const revalidate = 0;
 
@@ -113,8 +114,8 @@ const MatchDetail: React.FC<MatchDetailProps> = ({
     }
 
     return (
-        <div className="flex flex-col space-y-2 pt-4 text-center">
-            <div className="flex flex-col items-center mx-4 mb-5 text-primary-foreground">
+        <div className="flex flex-col text-center">
+            <div className="flex flex-col items-center py-4 text-primary-foreground">
                 <h1 className="font-bold text-2xl">
                     {match.homeTeam}
                 </h1>
@@ -125,39 +126,29 @@ const MatchDetail: React.FC<MatchDetailProps> = ({
             </div>
 
             <section className="flex flex-col space-y-4 p-4 text-primary bg-sveYellowDarker">
-                    <div className="flex items-center justify-center space-x-8">
-                        <h3 className="flex items-center gap-2 font-semibold">
-                            <CalendarDays className="w-8 h-8" />
-                            {format(new Date(match.date), 'dd.MM.yy')}
-                        </h3>
-                        <h3 className="flex items-center gap-2 font-semibold">
-                            {match.time}
-                            <Timer className="w-8 h-8" />
-                        </h3>
-                    </div>
+                <div className="flex items-center justify-center space-x-8 my-4">
+                    <h3 className="flex items-center gap-2 font-semibold">
+                        <CalendarDays className="w-8 h-8" />
+                        {format(new Date(match.date), 'EEE, dd.MM.yy')}
+                    </h3>
+                    <h3 className="flex items-center gap-2 font-semibold">
+                        {match.time}
+                        <Timer className="w-8 h-8" />
+                    </h3>
+                </div>
 
-                    <div className="flex flex-col items-center space-y-6">
-                        <a
-                            href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(match.location)}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex items-center gap-2 font-semibold truncate">
-                            <MapPin className="w-8 h-8" />
-                            {match.location}
-                        </a>
-                        {match.needRef && (
-                            <div className="flex items-center gap-2">
-                                <GiWhistle className="w-8 h-8" />
-                                <p className="font-semibold">
-                                    Refs needed!
-                                </p>
-                            </div>
-                        )}
-                    </div>
+                <a
+                    href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(match.location)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center font-semibold truncate underline">
+                    <TbMapPinShare className="w-8 h-8 mr-2" />
+                    {match.location}
+                </a>
 
-                    <PlayerList players={players} heading="View Lineup" />
+                <PlayerList players={players} heading="View Lineup" />
 
-                    <Notes notes={match.notes} />
+                <Notes notes={match.notes} />
 
                 <div className="flex flex-col space-y-4">
                     <div className="flex items-center justify-between space-x-2">

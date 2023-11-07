@@ -19,7 +19,7 @@ const Notes: React.FC<NotesProps> = ({
                 </AccordionTrigger>
                 <AccordionContent>
                     <p className="max-h-[290px] overflow-y-auto overflow-x-hidden rounded-md text-left text-base">
-                        &quot;{notes}&quot;
+                        {notes ? notes : "No notes."}
                     </p>
                 </AccordionContent>
             </AccordionItem>

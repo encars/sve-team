@@ -1,7 +1,7 @@
 "use client";
 
 import { Practice, User } from "@prisma/client";
-import { CalendarDays, Check, ChevronLeft, MapPin, Timer, X } from "lucide-react";
+import { CalendarDays, Check, Timer, X } from "lucide-react";
 import { notFound, useRouter } from "next/navigation";
 import { Button } from "./ui/button";
 import { useState } from "react";
@@ -9,6 +9,8 @@ import PlayerList from "./PlayerList";
 import { toast } from "./ui/use-toast";
 import axios from "axios";
 import { format } from "date-fns";
+import Notes from "./Notes";
+import { TbMapPinShare } from "react-icons/tb";
 
 interface PracticeDetailProps {
     practice: Practice;
@@ -109,23 +111,29 @@ const PracticeDetail: React.FC<PracticeDetailProps> = ({
     }
 
     return (
-        <div className="relative flex flex-col p-4 text-primary-foreground bg-blue-950 rounded-md">
-            <div onClick={() => router.back()} className="absolute top-5 left-8">
-                <ChevronLeft size={36} />
+        <div className="flex flex-col text-center">
+            <div className="flex flex-col items-center py-4 text-primary-foreground">
+                <h1 className="font-bold text-2xl">
+                    Practice Details
+                </h1>
+                <h2 className="text-muted-foreground text-lg">
+                    {practice.time === "19:15" ? (
+                        "Extended"
+                    ) : (
+                        "Regular"
+                    )}
+                </h2>
             </div>
-            <h1 className="font-mono text-2xl text-primary-foreground text-center mt-1 mb-10">
-                Practice
-            </h1>
 
-            <div className="flex flex-col space-y-8 mb-8">
-                <div className="flex items-center justify-between">
-                    <h3 className="flex items-center gap-2 text-primary-foreground font-mono">
-                        <CalendarDays size={36} />
-                        {format(new Date(practice.date), 'dd.MM.yy')}
+            <section className="flex flex-col space-y-4 p-4 text-primary bg-sveYellowDarker">
+                <div className="flex items-center justify-center space-x-8 my-4">
+                    <h3 className="flex items-center gap-2 font-semibold">
+                        <CalendarDays className="w-8 h-8" />
+                        {format(new Date(practice.date), 'EEE, dd.MM.yy')}
                     </h3>
-                    <h3 className="flex items-center gap-2 text-primary-foreground font-mono">
+                    <h3 className="flex items-center gap-2 font-semibold">
                         {practice.time}
-                        <Timer size={36} />
+                        <Timer className="w-8 h-8" />
                     </h3>
                 </div>
 
@@ -133,26 +141,16 @@ const PracticeDetail: React.FC<PracticeDetailProps> = ({
                     href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(practice.location)}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-2 text-primary-foreground font-mono">
-                    <MapPin size={36} />
+                    className="flex items-center justify-center font-semibold truncate underline">
+                    <TbMapPinShare className="w-8 h-8 mr-2" />
                     {practice.location}
                 </a>
-            </div>
 
-            <div className="flex flex-col space-y-2 mb-2">
-                <h3 className="text-primary-foreground ml-2">
-                    Notes:
-                </h3>
-                <small className="bg-primary p-4 rounded-md">
-                    {practice.notes}
-                </small>
-            </div>
-
-            <div className="bg-primary rounded-md mb-2">
                 <PlayerList players={players} heading="View Lineup" />
-            </div>
 
-            <div className="flex flex-col space-y-4">
+                <Notes notes={practice.notes} />
+
+                <div className="flex flex-col space-y-4">
                     <div className="flex items-center justify-between space-x-2">
                         <Button onClick={handleAccept} disabled={isLoading} className="w-full shadow-md bg-green-600 hover:bg-green-700">
                             <Check className="w-6 h-6 mr-2" />
@@ -164,6 +162,7 @@ const PracticeDetail: React.FC<PracticeDetailProps> = ({
                         </Button>
                     </div>
                 </div>
+            </section>
         </div>
     );
 };
